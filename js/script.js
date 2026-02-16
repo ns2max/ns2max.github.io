@@ -193,5 +193,11 @@ $(document).ready(function() {
 		localStorage.setItem('boxColor', color);
 	});
 	// Settings END
+
+
+
+
+
+	
 	
 });
