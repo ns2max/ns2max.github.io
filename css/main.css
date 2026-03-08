@@ -2156,6 +2156,19 @@ a {
     font-weight: 500;
 }
 
+.card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+/* When badges are in a group, remove their own bottom margin */
+.card-badges .card-badge {
+    margin-bottom: 0;
+}
+
+
 .card-badge.music    { background: rgba(110, 138, 169, 0.2); color: #6e8aa9; border: 1px solid rgba(110,138,169,0.3); }
 .card-badge.ai    { background: rgba(122, 66, 126, 0.2); color: #b490b5; border: 1px solid rgba(169, 110, 169, 0.3); }
 .card-badge.cv       { background: rgba(147, 187, 175, 0.2); color: #93bbaf; border: 1px solid rgba(147,187,175,0.3); }

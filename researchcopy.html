@@ -296,12 +296,26 @@
                             <!-- Project Cards -->
                             <div class="project-grid">
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.1s" data-category="music" onclick="openModal('modal-gesture')">
-                                    <div class="card-badge music">Music Tech</div> <div class="card-badge ai">AI/ ML</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.1s" data-category="music ai" onclick="openModal('modal-gesture')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI/ ML</div>
+                                    </div>
                                     <div class="card-title">Gesture Detection for Electric Guitar</div>
                                     <div class="card-teaser">IMU-based gesture recognition bridging guitarist technique and stage presence. Part of PhD research at UniTrento.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.1s" data-category="music ai" onclick="openModal('modal-gesture')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI</div>
+                                    </div>
+                                    <div class="card-title">Gesture Detection for Electric Guitar</div>
+                                    <div class="card-teaser">IMU-based gesture recognition bridging guitarist technique and stage presence. Part of PhD research at UniTrento.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
 
                                 <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.15s" data-category="music" onclick="openModal('modal-patterns')">
                                     <div class="card-badge music">Music Tech</div>
@@ -428,14 +442,13 @@
     // ── Category filter ─────────────────────────────────────
     document.querySelectorAll('.filter-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-            document.querySelectorAll('.filter-btn').forEach(function (b) {
-                b.classList.remove('active');
-            });
+            document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
             this.classList.add('active');
 
             var filter = this.dataset.filter;
             document.querySelectorAll('.project-card').forEach(function (card) {
-                if (filter === 'all' || card.dataset.category === filter) {
+                var categories = card.dataset.category ? card.dataset.category.split(' ') : [];
+                if (filter === 'all' || categories.indexOf(filter) !== -1) {
                     card.classList.remove('hidden');
                 } else {
                     card.classList.add('hidden');
