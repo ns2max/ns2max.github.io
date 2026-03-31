@@ -107,7 +107,14 @@
             <p>This is the paper that started the series. Written while I was an independent researcher based in Colombo, Sri Lanka, in collaboration with Prof. Carlo Fischione (KTH Royal Institute of Technology) and Prof. Luca Turchet (University of Trento), it was published at the 27th FRUCT Association Conference.</p>
             <p>The central question was simple but unexplored: can a musical instrument detect the patterns it is playing, in real time, as they happen — with no recording, no offline processing, and no knowledge of what comes next? This matters enormously for IoMusT applications, where a smart instrument needs to identify a phrase as soon as it is played and instantly fire a control message to connected devices.</p>
 
-            <!-- IMAGE SUGGESTION: A smart cajón with embedded computing device — the running example used throughout the paper -->
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/smart_cajon.png" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/smart_cajon.png" alt="reference">
+                    </a>
+                    <div class="img-caption">the first author raising the fretboard during a solo in Piazza Duomo, Trento, 2025</div>
+                </div>
+            </div>
 
             <h3>Note Representation</h3>
             <p>We introduced a compact MIDI-based matrix representation encoding three core attributes per note: pitch (MIDI number), amplitude (MIDI velocity), and duration (seconds). A musical pattern is then a sequence of such column matrices, and detection becomes a sequence matching problem on a live stream.</p>
