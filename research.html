@@ -28,20 +28,193 @@
         <span class="modal-close" onclick="closeModal('modal-gesture')">&times;</span>
         <h2 class="modal-title">Gesture Detection for Electric Guitar</h2>
         <div class="modal-description">
-            <p>The most recent project I've been working on is a combined gesture + musical pattern detection for electric guitars. The project is a collaboration with Prof. Marcelo M. Wanderley, and is part of my PhD research at the University of Trento. The project aims to develop a system that can detect the gestures of a guitarist and use that information to control various effects.</p>
-            <p>I investigated a continuum of gestures ranging from natural gestures for better technique to theatrical gestures for stage presence. I designed a system that can detect a few gestures using IMU sensors. The paper highlighting the development will be presented at the International Symposium for the Internet of Sounds 2025.</p>
+            <p>This project is part of my PhD research at the University of Trento, in collaboration with Prof. Marcelo M. Wanderley (McGill University) and Prof. Luca Turchet (University of Trento). It integrates real-time gesture detection with a pre-existing musical pattern detection framework to create a Smart Musical Instrument (SMI) capable of triggering peripheral devices — lighting, effects, metaverse elements — through the combined use of physical and musical expression.</p>
+            <p>The paper, <em>Melody and Motion: Integrating Guitar Gestures with Musical Patterns for Extended Control in Live Performance and Metaverse Applications</em>, was presented at the International Symposium for the Internet of Sounds 2025.</p>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/gesture-guitar/smi_sensors.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/gesture-guitar/smi_sensors.jpg" alt="reference">
+                    </a>
+                    <div class="img-caption">IMU and PI</div>
+                </div>
+                <div class="modal-img-item">
+                    <a href="images/projects/gesture-guitar/guitar1.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/gesture-guitar/guitar1.jpg" alt="sample">
+                    </a>
+                    <div class="img-caption">Full SMI prototype</div>
+                </div>
+            </div>
+
+
+            <h3>Motivation — The Functional-to-Theatrical Continuum</h3>
+            <p>Guitarists have always used their bodies expressively on stage — Jimi Hendrix playing behind his back, Chuck Berry's duckwalk, Jimmy Page raising his guitar for high notes. But beyond theatrics, movement and music are deeply intertwined: gestures often cue or follow key musical phrases, and the boundary between a functional technique adjustment and a deliberate theatrical flourish is surprisingly fluid.</p>
+            <p>To understand this continuum, I conducted a case study with 5 professional guitarists (mean age 32.2, all experienced in live performance with bands). Through structured interviews, I probed both their unconscious functional movements — tilting the neck for fret access, bracing during fast passages — and their deliberate theatrical ones. The findings confirmed that movements exist on a spectrum: a neck tilt done for technique gradually becomes a crowd-facing raise at the peak of a solo. Musical dynamics, technical difficulty, and audience energy all jointly influence when a gesture tips from functional to theatrical.</p>
+            <p>A key insight was that guitarists consistently reported making signature movements <em>immediately after</em> iconic musical phrases. This motivated the core design of the system: a combined musical pattern + gesture trigger, rather than gesture alone.</p>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/gesture-guitar/raise.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/gesture-guitar/raise.jpg" alt="reference">
+                    </a>
+                    <div class="img-caption">the first author raising the fretboard during a solo in Piazza Duomo, Trento, 2025</div>
+                </div>
+                <div class="modal-img-item">
+                    <a href="images/projects/gesture-guitar/ljubljana-2023-future-past-56704.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/gesture-guitar/ljubljana-2023-future-past-56704.jpg" alt="sample">
+                    </a>
+                    <div class="img-caption">Steve Harris (Iron Maiden) pointing the guitar neck forward at the audience</div>
+                </div>
+            </div>
+
+            <h3>System Architecture</h3>
+            <p>The SMI is built around a Raspberry Pi 4 with a HiFiBerry DAC+ADC audio interface, all self-powered and mounted directly on the guitar body. Audio output is split — one path to the detection system, one to the PA. A BNO055 IMU sensor is attached to the headstock (the point of maximum movement on a guitar) and connected via I²C to the Raspberry Pi, sampling at 100 Hz. Wireless OSC messages are transmitted upon detection to control any networked peripheral device.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 3 from the paper — block diagram showing the full RTPD + gesture detection system -->
+
+            <p>Two independent detection algorithms run in parallel on the embedded system:</p>
+            <ul>
+                <li><strong>Musical Pattern Detection (RTPD):</strong> Audio is sampled in 30 ms windows. MFCCs are extracted (FFT size 2048, hop size 512, 10 Mel bins) and fed to a stacked RNN — comprising LSTM (256 units), GRU (128 units), and Simple RNN (256 units) layers. The model is trained on synthetically generated variations of each target pattern (up to ~10,000 variations per pattern) to be robust to expressive deviations like added notes, removed notes, and timing shifts.</li>
+                <li><strong>Gesture Detection:</strong> Accelerometer data from the BNO055 is hard-clipped to remove artifacts, then buffered in a 1-second sliding FIFO window (100 samples). X, Y, and Z acceleration vectors are concatenated and fed to a single-LSTM RNN (256 units). Two gestures were selected based on the case study: <em>neck raise (G1)</em> — tilting the fretboard upwards — and <em>forward tilt (G2)</em> — rotating the neck horizontally towards the audience.</li>
+            </ul>
+
+            <h3>Combining Pattern and Gesture — The State Machine</h3>
+            <p>The outputs of both systems are combined by a Hierarchical Finite State Machine (HFSM) with three states: <em>Idle</em> → <em>Pattern Detected</em> → <em>Gesture Detected</em>. A trigger fires only when the correct musical pattern is immediately followed by the corresponding gesture — meaning stray motions during silence and mis-played patterns are both gracefully ignored. This design reflects how guitarists actually perform: the music cues the gesture, not the other way around.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 4 from the paper — HFSM diagram showing the three states and transition conditions -->
+
+            <h3>Technical Evaluation</h3>
+            <p>The system was evaluated using a 500-event test corpus covering five conditions: correct pattern→gesture sequences (P1→G1, P2→G2), cross-mapped sequences (wrong gesture for the pattern), pattern-only events, and gesture-only events. Results across the full corpus:</p>
+            <ul>
+                <li><strong>Precision:</strong> 0.79</li>
+                <li><strong>Recall:</strong> 0.76</li>
+                <li><strong>F1 Score:</strong> 0.78</li>
+            </ul>
+            <p>Qualitatively, the evaluator noted the forgiving nature of the HFSM — mis-played patterns never triggered gestures, and isolated motions during rests were consistently ignored. This highlights a key advantage of requiring both cues simultaneously.</p>
+
+            <h3>Metaverse Applications</h3>
+            <p>The case study participants were also shown recordings of Metaverse concerts and asked how their movements would translate into virtual environments. All five expressed enthusiasm for avatar-mirroring of large gestures, and suggested novel virtual-only effects: environment changes, particle trails, avatar size scaling, and transporting the audience to a different virtual location. The system's OSC output is designed to feed directly into these virtual worlds, making the guitarist's body a programmable controller for the Metaverse stage.</p>
+            <p>This work is supported by the MUSMET project, funded by the EIC Pathfinder Open scheme of the European Commission (grant agreement n. 101184379).</p>
         </div>
     </div>
 </div>
 
-<div id="modal-patterns" class="modal">
+<div id="modal-rtpd-fruct" class="modal">
     <div class="modal-content">
-        <span class="modal-close" onclick="closeModal('modal-patterns')">&times;</span>
-        <h2 class="modal-title">Musical Pattern Detection</h2>
+        <span class="modal-close" onclick="closeModal('modal-rtpd-fruct')">&times;</span>
+        <h2 class="modal-title">Real-Time Musical Pattern Detection: Early Foundations</h2>
         <div class="modal-description">
-            <p>I have been working on musical pattern detection for several years — it was the primary topic of my PhD. I developed several systems to detect musical patterns from monophonic to polyphonic, from symbolic to audio data. I interviewed many musicians to understand the level of artistic and expressive variation that might be applied when they repeat certain phrases. The dataset thus constructed was an amazing resource for my research.</p>
-            <p>One of my initial prototypes was selected as one of the three finalists for the MIDI Awards 2023. The panel of judges included key figures such as Roger Lynn, Pedro Eustache, and Nina Richards. The livestream of the event can be found <a href="https://www.youtube.com/watch?v=Qt0FJQ9V9sk" target="_blank">HERE</a>.</p>
-            <p>I have developed several algorithms for musical pattern detection and tested them on various datasets. The system is designed to be easily deployable and can be used with any instrument.</p>
+            <p>This is the paper that started the series. Written while I was an independent researcher based in Colombo, Sri Lanka, in collaboration with Prof. Carlo Fischione (KTH Royal Institute of Technology) and Prof. Luca Turchet (University of Trento), it was published at the 27th FRUCT Association Conference.</p>
+            <p>The central question was simple but unexplored: can a musical instrument detect the patterns it is playing, in real time, as they happen — with no recording, no offline processing, and no knowledge of what comes next? This matters enormously for IoMusT applications, where a smart instrument needs to identify a phrase as soon as it is played and instantly fire a control message to connected devices.</p>
+
+            <!-- IMAGE SUGGESTION: A smart cajón with embedded computing device — the running example used throughout the paper -->
+
+            <h3>Note Representation</h3>
+            <p>We introduced a compact MIDI-based matrix representation encoding three core attributes per note: pitch (MIDI number), amplitude (MIDI velocity), and duration (seconds). A musical pattern is then a sequence of such column matrices, and detection becomes a sequence matching problem on a live stream.</p>
+
+            <h3>Methods Compared</h3>
+            <p>We evaluated five candidate approaches on a synthetically generated dataset:</p>
+            <ul>
+                <li><strong>Deterministic system:</strong> Strict boundary-check on all three note attributes with user-defined tolerances. Achieved 100% detection with zero false positives on the synthetic dataset — but inherently brittle: any deviation outside tolerance is a miss</li>
+                <li><strong>Single neural network:</strong> One network trained on all patterns simultaneously; input padded to a fixed length. Higher false positive rate but flexible</li>
+                <li><strong>Multiple neural networks:</strong> A dedicated binary-output network per pattern, each trained on its own variations</li>
+                <li><strong>CNN:</strong> Convolutional architecture applied to the matrix representation</li>
+                <li><strong>RNN:</strong> Recurrent architecture; showed the highest true positive rate among ML methods, though with significant false positives on this early synthetic dataset</li>
+            </ul>
+            <p>The deterministic system and RNN emerged as the strongest candidates, motivating the more targeted follow-up work that replaced the boundary-check approach with similarity-based methods. One early prototype built from this research was selected as a finalist for the <strong>MIDI Awards 2023</strong> — judged by Roger Lynn, Pedro Eustache, and Nina Richards. The event livestream is available <a href="https://www.youtube.com/watch?v=Qt0FJQ9V9sk" target="_blank">HERE</a>.</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal-rtpd-ssim" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-rtpd-ssim')">&times;</span>
+        <h2 class="modal-title">SSIM-Based Real-Time Pattern Detection</h2>
+        <div class="modal-description">
+            <p>Published at the <strong>25th International Conference on Digital Audio Effects (DAFx 2022)</strong> in Vienna, this paper introduced a novel non-ML approach to real-time monophonic symbolic pattern detection — one that borrowed a core technique from Computer Vision.</p>
+            <p>The motivation was to fix two key weaknesses of the earlier deterministic system: too many false detections when note attributes strayed just outside tolerance, and complete inability to handle transposed patterns. The new approach also eliminates the training overhead of ML methods, making it far faster to deploy for a musician who wants to define a new pattern.</p>
+
+            <!-- IMAGE SUGGESTION: Figure showing the Match Measure (MM) values plotted for each windowed sequence in a composition — the peaks clearly identifying pattern occurrences -->
+
+            <h3>Four-Attribute Note Representation</h3>
+            <p>We extended the earlier 3-attribute representation to include a fourth: <strong>pitch bend</strong>. Guitar players and keyboard players routinely use pitch bend for expressive effect — a glissando, a string bend, vibrato — and capturing these graceful pitch changes is essential for robust detection. Rather than storing all 158+ MIDI pitch-wheel messages per bend, we extract only the local minima and maxima, preserving the shape of the bend with minimal data.</p>
+
+            <h3>The SSIM Approach</h3>
+            <p>The Structural Similarity Index Measure (SSIM) is a Computer Vision metric that compares two images by measuring luminance, contrast, and structure. We repurposed it here to compare two musical note sequences: each attribute vector (pitch, pitch-bend, amplitude, duration) is treated independently, and an SSIM value is computed for each pair. The four values are combined into a single <em>Match Measure (MM)</em> via weighted summation:</p>
+            <p>MM = SSIM(pitch) + 0.2 × SSIM(amplitude) + 0.2 × SSIM(pitch-bend) + 0.3 × SSIM(duration)</p>
+            <p>A perfect match yields MM = 1.7; any attribute deviation lowers the score. Because each attribute contributes independently, the system gracefully handles partial deviations — exactly as a human listener would.</p>
+
+            <h3>Bicubic Interpolation for Variable-Length Patterns</h3>
+            <p>A musician may add extra notes or double notes within a phrase without changing its perceptual identity. To handle this, we use <strong>bicubic interpolation</strong> — borrowed again from image processing — to resize the incoming note sequence to match the length of the stored pattern before computing SSIM. This is what allows the method to compare patterns of different lengths without requiring an exact note-for-note alignment.</p>
+
+            <!-- IMAGE SUGGESTION: Figure from the paper showing a 29-note Beethoven pattern from JKUPDD, compared against a 31-note variation with two doubled notes, after interpolation -->
+
+            <h3>Results</h3>
+            <p>The algorithm was evaluated on three datasets: a human-recorded dataset, a synthetically generated dataset, and the standard JKUPDD musicological dataset (Beethoven, etc.). An overall <strong>detection rate of 95%</strong> was achieved. Critically, the low computational load and near-instant inference demonstrate its suitability for direct deployment on embedded systems — no GPU, no training pipeline, no pre-processing window required.</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal-rtpd-domp" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-rtpd-domp')">&times;</span>
+        <h2 class="modal-title">DTW vs RNN for Symbolic Pattern Recognition</h2>
+        <div class="modal-description">
+            <p>Published at <strong>Audio Mostly 2024</strong> in Milan, this paper pushed the symbolic monophonic detection work in two directions simultaneously: replacing ad-hoc synthetic datasets with a large-scale human-recorded benchmark, and conducting a rigorous head-to-head between Dynamic Time Warping and Recurrent Neural Networks as the number of patterns scales up.</p>
+
+            <!-- IMAGE SUGGESTION: Electric guitar outfitted with the Fishman TriplePlay MIDI tracker — Figure 1 from the paper -->
+
+            <h3>The DoMP Dataset</h3>
+            <p>A central contribution is the <strong>Dataset of Musical Patterns (DoMP)</strong>, publicly available at <a href="https://doi.org/10.5281/zenodo.10818617" target="_blank">zenodo</a>. The dataset contains 4,000 patterns and expressive variations recorded by 40 musicians — 20 keyboard players and 20 electric guitar players from diverse backgrounds (classically trained pianists, church organists, session musicians, rock and blues guitarists, jazz players). Each musician composed 10 distinct monophonic patterns and then repeated each 9 more times, freely adding expressive variations — string bends, hammer-ons, passing chromatic notes, velocity shifts, doubled notes — as long as the phrase remained perceptually identical to an untrained listener. The dataset exists in both MIDI and audio format and is designed as a worst-case benchmark: the most challenging expressive variations a pattern detection system is likely to encounter in real performance.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 2 from the paper — sheet music showing a pattern (a) and a variation with added notes (b) -->
+
+            <h3>Synthetic Variation Generator</h3>
+            <p>Training an RNN requires many examples. Rather than asking musicians to record hundreds of repetitions, we developed a rule-based model that generates synthetic melodic and expressive variations of any given ground-truth pattern. The rules were derived from careful analysis of the DoMP recordings — identifying the most common variation types and encoding them as parameterised transformations. This allows a musician to define a new pattern with a single recording and immediately have a trained model ready.</p>
+
+            <h3>DTW vs RNN: How They Scale</h3>
+            <p>Both methods perform well when detecting up to 3 distinct patterns. But as the number of patterns increases to 10:</p>
+            <ul>
+                <li><strong>Dynamic Time Warping:</strong> Shows a significant negative correlation between the number of patterns and recognition accuracy — the more patterns, the more false positives</li>
+                <li><strong>RNN:</strong> Maintains approximately <strong>98% detection accuracy</strong> across all pattern counts — the classifier simply adds an output class for each new pattern without degradation</li>
+            </ul>
+            <p>The conclusion is clear: for real-world use cases where a musician has a library of 5–10 licks they want to map to controls, DTW is not a viable approach. The RNN architecture is the correct choice, and this paper provides the dataset and evaluation methodology to prove it.</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal-rtpd-jaes" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-rtpd-jaes')">&times;</span>
+        <h2 class="modal-title">Real-Time Polyphonic Audio Pattern Detection</h2>
+        <div class="modal-description">
+            <p>Published in the <strong>Journal of the Audio Engineering Society (JAES), Vol. 74, No. 3, March 2026</strong>, this paper represents the culmination of the pattern detection research thread — moving beyond symbolic MIDI to raw polyphonic audio, and beyond benchmarks to actual embedded deployment on a Raspberry Pi 4.</p>
+            <p>Every previous method required the instrument to output MIDI — either natively (keyboards) or via a MIDI tracker (guitars). This is a significant constraint: audio-to-MIDI conversion in real time is still an unsolved problem, and requires expensive or unreliable hardware. Moving to direct audio input removes this dependency entirely, making the system practical for any guitar, keyboard, or acoustic instrument.</p>
+
+            <!-- IMAGE SUGGESTION: System block diagram showing audio input → MFCC extraction → RNN classifier → OSC output to peripheral devices -->
+
+            <h3>The DoPP Dataset</h3>
+            <p>A new <strong>Dataset of Polyphonic Patterns (DoPP)</strong> was created, available at <a href="https://doi.org/10.5281/zenodo.14497998" target="_blank">zenodo</a>. Unlike the earlier monophonic DoMP, musicians here were free to use any combination of monophony and polyphony — chords, double stops, chord melodies — making the detection problem substantially harder. 20 musicians (10 keyboard, 10 guitar, mean age 38.5) each contributed 10 patterns with 9 expressive repetitions. Mean pattern duration: 7.4 seconds. The dataset captures diverse timbral signatures across multiple instruments and pickup selections.</p>
+
+            <h3>Architecture</h3>
+            <p>Audio is processed in 30 ms windows with a 10 ms hop. Mel-frequency cepstral coefficients (MFCCs) are extracted and fed into a stacked recurrent neural network. A synthetic training dataset is generated from the real recordings using the same rule-based variation model developed for the DoMP work. For the DTW baseline, multidimensional DTW is computed across all Mel bands, with a threshold determined via Youden's index on a validation split.</p>
+
+            <h3>Results on Embedded Hardware</h3>
+            <table style="width:100%; border-collapse:collapse; margin-top:0.5rem;">
+                <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.2)">
+                    <th style="text-align:left;padding:6px 10px"></th>
+                    <th style="text-align:center;padding:6px 10px">RNN</th>
+                    <th style="text-align:center;padding:6px 10px">DTW</th>
+                </tr></thead>
+                <tbody>
+                    <tr><td style="padding:6px 10px">Precision</td><td style="text-align:center">0.74</td><td style="text-align:center">0.80</td></tr>
+                    <tr><td style="padding:6px 10px">Recall</td><td style="text-align:center">0.775</td><td style="text-align:center">0.555</td></tr>
+                    <tr><td style="padding:6px 10px">F1 Score</td><td style="text-align:center"><strong>0.76</strong></td><td style="text-align:center">0.65</td></tr>
+                    <tr><td style="padding:6px 10px">Inference Time (RPi 4)</td><td style="text-align:center"><strong>14 ms</strong></td><td style="text-align:center">1038 ms</td></tr>
+                    <tr><td style="padding:6px 10px">CPU Usage (RPi 4)</td><td style="text-align:center"><strong>31.4%</strong></td><td style="text-align:center">48.9%</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top:0.75rem;">The DTW method achieves slightly higher precision but cannot operate in real time — 1038 ms inference on a Raspberry Pi 4 is over 70× the 14 ms window needed for latency-transparent musical triggering. The RNN method meets real-time requirements comfortably, runs within the CPU budget of an embedded system, and achieves a substantially better F1 score by retaining far higher recall. A video of the system in operation is available at <a href="https://youtu.be/gkOqfOT8zXM" target="_blank">HERE</a>.</p>
         </div>
     </div>
 </div>
@@ -51,31 +224,178 @@
         <span class="modal-close" onclick="closeModal('modal-multisensory')">&times;</span>
         <h2 class="modal-title">Multisensory Concerts</h2>
         <div class="modal-description">
-            <p>Details coming soon.</p>
+            <p>What if the music you play could physically move the audience — not just emotionally, but through light, vibration, and virtual objects materializing in front of their eyes? This project explores exactly that, through the lens of the Internet of Musical Things (IoMusT): a network of smart instruments, stage equipment, and audience devices all responding to music in real time.</p>
+            <p>The paper, <em>Interactive IoMusT-Based Concerts: Real-Time Pattern Recognition and Audience Experience</em>, was co-authored with Alberto Boem and Prof. Luca Turchet at the University of Trento, and published at the IEEE I3DA 2025 conference.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 7 from the paper — audience members wearing Meta Quest 3 MR headsets and holding smartphones, facing the performers -->
+            <!-- IMAGE SUGGESTION: Concert photo from the video at https://youtu.be/axEHkdnxFB8 — wide shot of the performance venue with stage lights and performers -->
+
+            <h3>The Concept</h3>
+            <p>The system allows performers playing Smart Musical Instruments (SMIs) to wirelessly trigger a range of sensory effects the moment they play a pre-defined musical pattern — without any manual controllers or interruption to their playing. The music itself is the controller. When a guitarist plays a specific lick, the stage lights sweep blue. When the drummer plays their pattern, smartphones in the hands of every audience member vibrate, and smoke fills the stage. When the keyboardist plays theirs, coloured 3D spheres appear in the air in front of the audience through Mixed Reality headsets.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 8 from the paper — screenshot from inside a Meta Quest 3 headset showing coloured spheres spawning in the passthrough view of the concert -->
+
+            <h3>The Performance Ecosystem</h3>
+            <p>Two live concerts were staged in an ecologically valid venue designed to resemble a music club. Each featured a trio of performers — guitarist, keyboardist, and drummer — each playing an SMI with an embedded Raspberry Pi 4 and a trained RNN model for real-time pattern detection. Upon detecting a pattern, the instrument transmitted a wireless OSC message over a local Wi-Fi network to a central server, which routed the command to the appropriate devices.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 2 from the paper — the smart electric guitar with the embedded computing system visible on the body -->
+            <!-- IMAGE SUGGESTION: Figure 3 from the paper — the smart keyboard and smart drum kit with the embedded devices highlighted -->
+
+            <p>The audience devices and stage equipment were:</p>
+            <ul>
+                <li><strong>Stage lights:</strong> Two Varytec Hero Wash 715 HEX LED moving heads + a Stairville Stage TRI LED bar — capable of dynamic color, rotation, and beam control</li>
+                <li><strong>Smoke machine:</strong> AF-180 LED Fogger for dramatic moments</li>
+                <li><strong>Mixed Reality headsets:</strong> 10 Meta Quest 3 devices per performance, each displaying interactive 3D objects spawning in passthrough view, built with Unity and the Meta XR SDK</li>
+                <li><strong>Haptic smartphones:</strong> Each audience member held an Android phone running a web app (Node.js + Vibration API) that delivered patterned vibrotactile pulses when the drum pattern was detected</li>
+            </ul>
+
+            <!-- IMAGE SUGGESTION: Figure 4 from the paper — network diagram illustrating the full ecosystem: SMIs → Wi-Fi router → central server → stage lights, MR headsets, smartphones -->
+            <!-- IMAGE SUGGESTION: Figure 6 from the paper — venue layout diagram showing performer positions (green), audience positions (orange), and the location of lights (purple), smoke machine (red), and speakers (blue) -->
+
+            <p>Routing between instruments and devices was configured through the <em>Hot Licks Mapper</em> — a dedicated visual composition tool developed alongside this system. For these concerts: guitar pattern → blue lights + MR spheres; keyboard pattern → green lights + MR spheres; drum pattern → red lights + smartphone vibrations + smoke. See the <strong>Hot Licks Mapper</strong> card for a full description.</p>
+
+            <h3>Results</h3>
+            <p>Each piece was performed twice — once with RTPD-triggered effects (Coherent condition), and once with randomly timed effects — allowing a direct within-session comparison. Key findings across 20 audience members and 6 performers:</p>
+            <ul>
+                <li><strong>Lights and vibrations</strong> were rated significantly more coherent with the music in the RTPD-driven condition (both p &lt; .05)</li>
+                <li><strong>Stage lighting</strong> was the most engaging and least distracting modality across both conditions</li>
+                <li><strong>MR headsets</strong> showed mixed responses — participants with prior VR experience perceived higher coherence; those unfamiliar with headsets reported distraction and some discomfort</li>
+                <li><strong>Performer satisfaction</strong> was high across the board: satisfaction 9.33/10, enjoyment 8.33/10, willingness to use AI tools in performances 8.16/10</li>
+                <li>An unexpected theme emerged from audience feedback: <strong>social interaction</strong>. Seeing other audience members physically reaching for and playing with virtual objects — through the headset's passthrough — became its own layer of enjoyment</li>
+            </ul>
+            <p>An unanticipated but telling quote from the audience: <em>"Watching others interacting with things that are not there is very funny... seeing everyone with a headset and playing with nonexistent things, while I am playing with the balls in my headset was very cool."</em></p>
+            <p>Performers expressed particular interest in using the RTPD system as a teaching tool — using pattern detection accuracy to trigger a green or red light as real-time feedback for students practising specific phrases or techniques.</p>
+            <p>A video of the full ecosystem and concert is available <a href="https://youtu.be/axEHkdnxFB8" target="_blank">HERE</a>. This work is supported by the MUSMET project, funded by the EIC Pathfinder Open scheme of the European Commission (grant agreement n. 101184379).</p>
         </div>
     </div>
 </div>
+
+<div id="modal-hotlicks" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-hotlicks')">&times;</span>
+        <h2 class="modal-title">Hot Licks Mapper</h2>
+        <div class="modal-description">
+            <p>The Hot Licks Mapper is a web-based visual composition and routing application developed as part of the IoMusT-Based Concerts project. It sits at the heart of the performance ecosystem — the single tool through which a composer wires together what happens on stage and in the audience whenever a musician plays a defined musical phrase.</p>
+            <p>The core design metaphor is a <em>patchbay</em>. Smart Musical Instruments (SMIs) with embedded pattern detection appear as input blocks, and output devices — stage lights, smoke machines, MR headsets, haptic smartphones, projectors — appear as output blocks. The composer draws arrows from patterns to stimuli to define the routing. Lines can be added, rerouted, or removed live during a performance from a handheld tablet on the same Wi-Fi network, enabling the show to evolve in real time without stopping or interrupting the musicians.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 5 from the paper — screenshot of the Hot Licks Mapper interface showing input SMI blocks connected via arrows to output device blocks -->
+
+            <h3>Mapping Modes</h3>
+            <p>The application supports four types of mappings, giving composers fine-grained control over how musical events propagate through the performance space:</p>
+            <ul>
+                <li><strong>One-to-one:</strong> A single pattern on one SMI triggers one stimulus on one device — the simplest mapping, useful for tight synchronization (e.g., guitar pattern fires the moving head lights blue)</li>
+                <li><strong>One-to-many:</strong> A single pattern triggers stimuli across multiple device types simultaneously (e.g., drum pattern fires the smoke machine, smartphone vibrations, and red lights all at once)</li>
+                <li><strong>Many-to-one:</strong> Multiple patterns from different SMIs must all fire to trigger a single combined effect — enabling compound cues that require the whole band to align</li>
+                <li><strong>Many-to-many:</strong> Multiple patterns mapped to multiple stimuli — the most expressive mode, allowing a single musical moment to cascade across the entire sensory environment</li>
+            </ul>
+
+            <h3>Technical Architecture</h3>
+            <p>Each SMI transmits an OSC message over Wi-Fi upon pattern detection. The Hot Licks Mapper runs as a web application on a central server, receiving these OSC messages and routing them according to the active mapping configuration. Output devices are addressed by IP and subnet — MR headsets on one subnet, smartphones on another, QLC+ (controlling stage lights and smoke) on a third. The composer's tablet communicates with the server over the same local network, dynamically modifying the routing graph in real time without any code changes.</p>
+
+            <!-- IMAGE SUGGESTION: Figure 4 from the paper — full network topology diagram showing SMIs → Wi-Fi router → central server (Hot Licks Mapper) → stage and audience devices -->
+
+            <h3>Design Motivation</h3>
+            <p>The need for this tool emerged from the constraints of live performance. Musicians cannot reliably trigger effects manually without introducing latency or requiring a dedicated technician watching every instrument simultaneously. By making the instrument itself the trigger and the Mapper the routing brain, the system is hands-free for performers and composer-programmable without any embedded code changes.</p>
+            <p>Audience evaluation confirmed the value of precise timing: light and vibration effects triggered by the pattern detection system were rated significantly more coherent with the music than randomly-timed equivalents (both p &lt; .05). The Mapper's routing precision is a direct contributor to that perceptual coherence.</p>
+            <p>This work is part of the MUSMET project, funded by the EIC Pathfinder Open scheme of the European Commission (grant agreement n. 101184379). A video of the system in action during the live concerts is available <a href="https://youtu.be/axEHkdnxFB8" target="_blank">HERE</a>.</p>
+        </div>
+    </div>
+</div>
+
 
 <div id="modal-datasets" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal('modal-datasets')">&times;</span>
         <h2 class="modal-title">Datasets for Musical Pattern Detection</h2>
         <div class="modal-description">
-            <p>Details coming soon.</p>
+            <p>One of the persistent obstacles in real-time pattern detection research is data. Most publicly available datasets are either fully synthetic, recorded in studio conditions, or designed for offline pattern discovery — not for the live, expressive, human performance scenario a smart musical instrument must handle. To bridge this gap, I created three complementary datasets across the course of my PhD, each extending the complexity of the previous one: from symbolic monophony, to rhythmic percussion, to polyphonic audio.</p>
+
+            <h3>DoMP — Dataset of Musical Patterns</h3>
+            <p>The <strong>DoMP</strong> is a dataset of monophonic musical patterns and expressive variations, available at <a href="https://doi.org/10.5281/zenodo.10818617" target="_blank">zenodo (DOI: 10.5281/zenodo.10818617)</a>. It contains <strong>4,000 patterns and variations</strong> — 400 distinct ground-truth patterns and 3,600 expressive repetitions — contributed by 40 musicians (20 keyboard players, 20 electric guitar players) from diverse ethnic and musical backgrounds (Italian, British, Scottish, Filipino, Spanish, Ugandan, and Sri Lankan; aged 18–43, mean 28.5). Musicians ranged from classically trained pianists and church organists to studio session players, jazz musicians, blues guitarists, and rock band members.</p>
+            <p>Each musician composed 10 distinct monophonic phrases and then repeated each 9 more times with full artistic freedom, subject to one condition: each repetition must remain perceptually equivalent to the original, by their own judgment. Guitar recordings were captured using a Fishman TriplePlay MIDI tracker on Ibanez S470 and Epiphone SG Standard guitars. Both MIDI files are included. Analysis of DoMP revealed an average pattern length of 20.45 MIDI notes, mean amplitude variation of 9.24 MIDI velocity units, and a 26.5% probability that a given pattern contains pitch bends. The dataset is deliberately designed as a worst-case benchmark.</p>
+
+            <!-- IMAGE SUGGESTION: Figure from AM '24 showing a pattern (a) and a variation with expressive additions (b) in sheet music notation -->
+
+            <h3>DoDP — Dataset of Drum Patterns</h3>
+            <p>The <strong>DoDP</strong> extends the DoMP framework into the rhythmic and percussive domain. Building on the same methodology, 10 drummers (all Italian, aged 18–36, mean 26.0) from diverse backgrounds — professional session drummers, jazz drummers, rock and metal band members, orchestral percussionists, and ethnic/traditional percussion players — each contributed 10 distinct drum patterns with 9 expressive repetitions each, yielding <strong>1,000 total recordings</strong> (100 distinct patterns and 900 variations).</p>
+            <p>All recordings were made using a Yamaha DTX-432k electronic drum kit configured with the standard General MIDI percussion mapping, enabling consistent MIDI note-number assignments across all recordings. Each MIDI file contains note numbers, velocity data, precise tick timing, and hi-hat pedal controller data. Key statistical characteristics include an average pattern length of 16.8 MIDI events, mean velocity variation of 12.6 units, and a 44 time signature in 75% of patterns. Compared to DoMP, DoDP shows smaller average temporal deviations (42.3 vs. 77.6 MIDI ticks) and more consistent pattern lengths — reflecting the greater rhythmic precision typical of drummers versus melodic players.</p>
+
+            <!-- IMAGE SUGGESTION: Photo of the Yamaha DTX-432k electronic drum kit used to record DoDP -->
+
+            <h3>DoPP — Dataset of Polyphonic Patterns</h3>
+            <p>The <strong>DoPP</strong> completes the three-dataset framework by moving into polyphonic audio, available at <a href="https://doi.org/10.5281/zenodo.14497998" target="_blank">zenodo (DOI: 10.5281/zenodo.14497998)</a>. It was created with 20 musicians (10 keyboard, 10 guitar; Italian and Sri Lankan; aged 26–55, mean 38.6), each contributing 10 polyphonic patterns with 9 expressive repetitions, yielding <strong>2,000 total audio recordings</strong>. Unlike DoMP, musicians were free to use any combination of monophony and polyphony — chords, double stops, chord melodies, contrapuntal motion — making the detection problem substantially harder.</p>
+            <p>Recordings were made at 44.1 kHz, 24-bit resolution using Universal Audio RME Fireface UFX and Zoom U-24 audio interfaces. Electric guitars were recorded as direct unprocessed input; keyboard players were asked to refrain from time-based effects. The dataset captures a wide range of instruments (Ibanez S470, Ibanez RGA7, Fender Stratocaster, Gibson Les Paul, Fender Telecaster, Korg Krome, Roli Seaboard, Korg KRONOS, and others) and diverse guitar-specific techniques including fingerstyle playing, hybrid picking, polyphonic string bending, and multi-finger tapping. Average pattern duration is 8.4 seconds (SD 5.54), with a dynamic range of −24 dB to 0 dB.</p>
+
+            <!-- IMAGE SUGGESTION: Recording setup — audio interface and guitar direct input chain used for DoPP -->
+
+            <h3>A Three-Tiered Framework</h3>
+            <p>Together, DoMP → DoDP → DoPP form a deliberate progression from the simplest symbolic single-voice case to the most complex real-world polyphonic audio scenario. All three datasets share an identical file naming convention (<code>artistID_patternID_versionID</code>) and folder structure for straightforward integration into evaluation pipelines. The systematic recording methodology — live musicians, intentional expressive variations, perceptual equivalence as the only constraint — makes all three datasets uniquely suited to evaluating pattern detection systems intended for live performance, and sets a new benchmark for the field.</p>
+
         </div>
     </div>
 </div>
 
+<!-- ============================================================
+     UPDATED: Seamless Digital Prints (Promptly)
+============================================================ -->
 <div id="modal-prints" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal('modal-prints')">&times;</span>
         <h2 class="modal-title">Technology to Enable Seamless and Continuous Digital Prints of Finished Garments</h2>
         <div class="modal-description">
-            <p>Details coming soon.</p>
+            <p>Conventional garment production has a long lead time — fabric is printed, then cut, then sewn. This project flipped the model: maintain a stock of pre-made white garments and print the design directly onto the finished piece, on demand. The company had developed a mechanism to do this by loading a garment onto a flat plate with knife edges and printing via a DTG printer.</p>
+            <p>The core challenge was geometric. A design is split into two matching halves — one per side of the garment. After the first side is printed, the garment is flipped and the second half printed. But the flip is never geometrically perfect, and no garment is perfectly uniform in shape. Two halves that align in the design file rarely align on the physical garment.</p>
+
+            <!-- IMAGE SUGGESTION: Before/after showing misaligned vs. corrected print halves on a finished garment -->
+
+            <p>My task was to perform an intentional, calculated image distortion so that each half conforms to the actual geometry of the garment at print time. Upon loading a garment, a camera captures its geometry. The design is then warped to fit the real garment before the print command is sent — and the same process runs for the reverse side.</p>
+
+            <!-- IMAGE SUGGESTION: Camera mounted above the flat-plate assembly capturing the garment geometry -->
+
+            <p>The details of the distortion algorithm and the custom flipping mechanism are under NDA. The resulting system completed a full two-sided print on a finished garment in approximately 4–6 minutes — a substantial reduction in lead time compared to conventional print-first production.</p>
         </div>
     </div>
 </div>
 
+<div id="modal-stransform" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-stransform')">&times;</span>
+        <h2 class="modal-title">Musical Onset Detection via the S-Transform</h2>
+        <div class="modal-description">
+            <p>This paper is the publication of my Master's thesis, written at Sheffield Hallam University in collaboration with Prof. Pradeep Chathuranga Weeraddana (University of Moratuwa) and Prof. Carlo Fischione (KTH Royal Institute of Technology). It addresses one of the most foundational problems in Music Information Retrieval: <em>beat tracking</em> — detecting the beat locations in a piece of music the way a listener subconsciously taps their foot.</p>
+            <p>The central component of any beat tracking pipeline is the reliable detection of <strong>Beat Causing Onsets (BCOs)</strong> — the rapid, unpredictable changes in the audio signal that correspond to a beat, typically generated by a low-frequency rhythm instrument such as a kick drum or bass. Existing BCO detection methods either sacrifice performance for computational simplicity (pure spectral methods) or sacrifice simplicity for performance (statistical estimation and machine learning approaches that require training data and prior knowledge). This paper proposes a third path: a training-free, prior-free method that exploits the unique properties of the S-transform to match the performance of statistical approaches at a fraction of the computational cost.</p>
+
+            <h3>Why the S-Transform?</h3>
+            <p>Most spectral onset detection methods rely on the Short-Time Fourier Transform (STFT), which uses a fixed-size window across all frequencies. This is a fundamental limitation: the STFT must commit to a window size before processing, creating an unavoidable trade-off between time resolution and frequency resolution that applies uniformly across the entire spectrum.</p>
+            <p>The <strong>S-transform</strong> (Stockwell Transform) solves this by using a <em>frequency-dependent window dilation</em> — the window automatically narrows at higher frequencies and widens at lower frequencies. This is ideal for BCO detection for two reasons:</p>
+            <ul>
+                <li>Rhythm instruments responsible for the beat (kick drum, bass) operate at relatively lower frequencies (32–512 Hz), where S-transform naturally provides better concentration</li>
+                <li>No window size needs to be chosen in advance — the algorithm is self-adapting across the frequency range, making it robust across musical genres and tempos</li>
+            </ul>
+
+            <h3>The Two-Stage Algorithm</h3>
+            <p>The method operates in two stages on a short mono audio excerpt (typically 4 seconds at 44.1 kHz, downsampled by a factor of 40 to ~1.1 kHz to reduce computation):</p>
+            <ul>
+                <li><strong>Stage 1 — Onset Envelopes by Band Splitting:</strong> The discrete S-transform matrix is computed for the downsampled signal. The time-frequency representation is then split into Q frequency subbands of width ~50 Hz each. For each subband, a mean onset envelope is computed by averaging across frequency rows. The result is Q independent onset envelopes — one per subband — each potentially encoding BCO information if the rhythm instrument's frequency range overlaps with that band</li>
+                <li><strong>Stage 2 — Onset Envelope Isolation:</strong> The key insight is that BCOs are periodic. If a subband contains BCO information, the clusters of high-amplitude components in its onset envelope will be <em>equally spaced in time</em>. The algorithm uses cubic spline interpolation to compute the upper envelope, centers and thresholds the signal, clusters the remaining nonzero components, and measures the consistency of spacing between consecutive cluster centers. The subband whose cluster spacings are most uniform — quantified by a regularity score <em>b<sub>i</sub></em> close to 1 — is selected as the BCO-bearing envelope, and BPM is estimated from its cluster spacing</li>
+            </ul>
+
+            <h3>Results</h3>
+            <p>The method was evaluated on two standard benchmarks used in the ISMIR 2006 competition: the <strong>Ballroom dataset</strong> (698 excerpts) and the <strong>Songs dataset</strong> (465 excerpts), covering diverse genres, tempos, and styles. Two accuracy metrics were used:</p>
+            <ul>
+                <li><strong>Accuracy 1:</strong> Percentage of tempo estimates within 4% of the ground-truth tempo</li>
+                <li><strong>Accuracy 2:</strong> Percentage of estimates within 4% of the ground truth, or a simple musical multiple thereof (½×, 2×, 3×, ⅓×) — accounting for octave tempo errors common in beat tracking</li>
+            </ul>
+            <p>The proposed S-transform method <strong>outperforms the pure spectral benchmark</strong> (Ellis 2007) on both datasets and both metrics, at the same asymptotic computational complexity of O(N log N) when using the fast discrete orthonormal Stockwell transform. It closely approaches the performance of the statistical estimation benchmark (Klapuri et al. 2006), which uses computationally intensive operations including filtering, comb filtering, discrete power spectral estimation, and hidden Markov model-based phase and period estimation — none of which are required by the proposed method.</p>
+            <p>The result is exactly the graceful trade-off the paper set out to find: better than simple spectral methods, comparable to complex statistical ones, and requiring no training data, no prior knowledge of the music, and no pre-set window length.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     UPDATED: COVID IoT
+============================================================ -->
 <div id="modal-covid" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal('modal-covid')">&times;</span>
@@ -107,13 +427,33 @@
     </div>
 </div>
 
+<!-- ============================================================
+     UPDATED: Care Label Defect Detection
+============================================================ -->
 <div id="modal-carelabels" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal('modal-carelabels')">&times;</span>
         <h2 class="modal-title">Automated Quality Checking of Care Labels</h2>
         <div class="modal-description">
-            <p>Care labels in clothing carry care instructions in multiple languages across several layers. Their accuracy is critical to garment quality, yet checking them manually is time-consuming and prone to human error — especially across languages and symbols.</p>
-            <p>I designed a computer vision system to automatically check each care label against a reference. The system reduced quality check time by approximately 99.5% and is easily deployable in any factory environment.</p>
+            <p>Care labels carry instructions in multiple languages across several layers. A missed stroke in Chinese can completely change the meaning of a care instruction — yet operators were manually comparing random samples against a verified master label, sometimes with a magnifying glass. Each label could take 15–20 minutes to check.</p>
+            <p>I was responsible for the project end-to-end, starting with interviews with the operators who performed the manual checks, then coordinating with managers, merchandisers, and technical staff on logistics and constraints. A firm requirement was that all data and processing had to remain local — no cloud or external servers due to compliance.</p>
+            <p>The solution used OpenCV, combining template matching and feature matching through multiple filtering layers. The system also had to be <em>explainable</em> — simply flagging a mismatch wasn't enough. Operators needed a visual overlay showing exactly where the discrepancy was, for use in reports and audits.</p>
+
+            <!-- IMAGE SUGGESTION: Side-by-side of master label and sample with defect overlay highlighted -->
+
+            <h3>Three Iterations</h3>
+            <p><strong>Iteration 1 — Desktop Scanner:</strong> Operators placed multiple random samples on a flatbed scanner for batch comparison. A task that previously took 15 minutes per label was reduced to 1–2 minutes for an entire batch.</p>
+
+            <!-- IMAGE SUGGESTION: Desktop scanner with multiple care labels arranged for batch scanning -->
+
+            <p><strong>Iteration 2 — Industrial Camera:</strong> A camera mounted on the workspace allowed operators to position a label within the field of view and receive real-time defect overlays on screen.</p>
+
+            <!-- IMAGE SUGGESTION: Workspace-mounted industrial camera setup with live overlay on monitor -->
+
+            <p><strong>Iteration 3 — Conveyor Belt:</strong> Built in close collaboration with mechanical engineering teams, this setup fed paper and card labels through the camera's field of view automatically. When the match probability fell below a threshold, the system triggered a PLC to reject the sample — no manual intervention required. This enabled checking entire batches rather than random samples, increasing operational efficiency and accuracy by up to 300%.</p>
+
+            <!-- IMAGE SUGGESTION: Conveyor belt setup with camera array above and PLC-controlled rejection mechanism -->
+
             <div class="modal-image-grid">
                 <div class="modal-img-item">
                     <a href="images/projects/8-reference.png" target="_blank" data-effect="mfp-zoom-in">
@@ -134,18 +474,37 @@
                     <div class="img-caption">results</div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
+<!-- ============================================================
+     UPDATED: Fabric Defect Detection
+============================================================ -->
 <div id="modal-fabric" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal('modal-fabric')">&times;</span>
         <h2 class="modal-title">Automated Fabric Quality Checking</h2>
         <div class="modal-description">
-            <p>In apparel production, raw fabric rolls are typically checked for defects manually — a slow process limited to defects visible to the naked eye. I designed a computer vision system using macro cameras to automatically detect artifacts and defects that human operators might miss.</p>
-           <div class="modal-image-grid">
+            <p>This project grew directly from my care label work. The same company operated several fabric manufacturing plants producing solid-colour rolls, and weave consistency was critical to downstream quality. Damaged or missed weaves — or foreign objects introduced during production — had to be caught early.</p>
+            <p>Unlike individual labels, random sampling wasn't viable here — every metre of every roll needed to be checked. The fabric arrived in rolls up to 60 inches wide and 100 feet long. Unwinding and rewinding solely for inspection wasn't logistically feasible. The only inspection window was <em>at the loom itself</em>, in real time as the fabric was being woven.</p>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/camera-array.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/camera-array.jpg" alt="sample 1">
+                    </a>
+                    <div class="img-caption">Not the real camera array, but an AI generated mockup.</div>
+                </div>
+            </div>
+
+            <p>The solution used an inverted rolling-window approach: the cameras stayed fixed while the fabric moved past. An array of industrial microscopic cameras with overlapping fields of view covered the full width of the roll, mounted between the loom and the take-up roller. Computation ran near real-time — if a defect was detected, an operator had to be notified within 5–6 seconds to pause the loom and place a physical marker at the defect location. During cutting, operators would avoid marked positions.</p>
+
+            <!-- IMAGE SUGGESTION: Close-up of a defect detection result — fabric sample with detected anomaly highlighted -->
+
+            <p>The solution was deployed as a pilot study. Despite the significant hardware cost of the custom-framed camera array, the system reduced the operator count in the pilot loom by 50%.</p>
+
+            <div class="modal-image-grid">
                 <div class="modal-img-item">
                     <a href="images/projects/2-original.png" target="_blank" data-effect="mfp-zoom-in">
                         <img src="images/projects/2-original.png" alt="sample 1">
@@ -171,7 +530,6 @@
                     <div class="img-caption">defects 2</div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -206,7 +564,83 @@
                     <div class="img-caption">the augmented reality table</div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+<div id="modal-techpack" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-techpack')">&times;</span>
+        <h2 class="modal-title">Tech Pack Digitization</h2>
+        <div class="modal-description">
+            <p>A tech pack is the comprehensive blueprint of a garment — capturing design intent, materials, measurements, and construction details for manufacturers. The company held a large archive of physical tech packs spanning years of design history, and digitizing them was essential for accessibility and long-term preservation.</p>
+            <p>This project was done before the LLM era, when OCR was still far from mature. Most tech packs followed a consistent template, which made structured extraction feasible — but it still required a pipeline combining image processing, OCR, and layout segmentation to reliably extract and map each field to the correct slot in the digital format.</p>
+
+            <!-- IMAGE SUGGESTION: Side-by-side of a scanned physical tech pack and its structured digital output -->
+
+            <p>I was responsible for the full pipeline — from evaluating and selecting high-resolution digital scanners, to implementing the OCR and segmentation logic, to verifying output accuracy at each stage. The result was a searchable digital archive of garment specifications, ready for integration into the company's existing product workflows.</p>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/techpack.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/techpack.jpg" alt="sample 1">
+                    </a>
+                    <div class="img-caption">I cant upload real images due to compliance issues. Here's an AI generated sample tech pack of a VS Cheeky.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     NEW: Aeoon DTG Printer Integration
+============================================================ -->
+<div id="modal-aeoon" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-aeoon')">&times;</span>
+        <h2 class="modal-title">Aeoon DTG Printer Integration</h2>
+        <div class="modal-description">
+            <p>One of the few projects I've done that sat squarely at the intersection of software engineering and hardware systems. We worked with Aeoon Kyo series Direct-to-Garment printers alongside a custom-designed loading and unloading mechanism. For the full system to work, the printer and the custom mechanism had to operate in tight synchronization.</p>
+            <p>Adding external sensors was an option, but it was intrusive — introducing new points of failure and bottlenecks. Instead, I worked directly with the Aeoon developers to understand their closed PLC system and identify trigger points that could be extracted non-invasively. In essence, reverse-engineering enough of the machine's internals to achieve integration without modifying the original hardware.</p>
+
+            <!-- IMAGE SUGGESTION: Aeoon Kyo printer with the custom loading/unloading mechanism alongside it -->
+
+            <p>There was also a software layer: the Raster Image Processor (RIP) that drives the printer had some primitive automation hooks, which I exploited to tie the RIP workflow into the broader automation loop. The final system ran as three independent closed-loop subsystems with selected interconnects:</p>
+
+            <ol>
+                <li>Custom mechanism loads the garment onto the print plate</li>
+                <li>RIP images the design → print starts → print finishes → bed returns to loading dock</li>
+                <li>Custom mechanism flips the garment</li>
+                <li>RIP images the reverse design → print starts → print finishes → bed returns</li>
+            </ol>
+
+            <!-- IMAGE SUGGESTION: Flowchart or diagram of the three closed-loop systems and their feedback interconnects -->
+
+            <p>Coordination across subsystems was handled by custom C++ programs interfacing between multiple devices, with carefully placed feedback signals to ensure each system only advanced when the others were in the correct state.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     NEW: Lace Archive and Search System
+============================================================ -->
+<div id="modal-lace" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('modal-lace')">&times;</span>
+        <h2 class="modal-title">Lace Archive and Search System</h2>
+        <div class="modal-description">
+            <p>The company produced laces for Noyon Dentelle, and the design process had a fascinating tradition: designers would browse physical catalogs of existing patterns, select elements from multiple designs, and combine them into new pieces. This was more efficient than designing from scratch because the weaving machines already had programs for each sub-design on file.</p>
+            <p>The problem was that this catalog existed entirely on paper — hundreds of physical lace samples, accessible only by physically browsing them. The goal was to digitize the archive and build a context-aware search system so designers could retrieve relevant sub-designs quickly.</p>
+
+            <!-- IMAGE SUGGESTION: Physical lace catalog — binders or folders of samples spread on a table -->
+
+            <p>Digitization was done using a combination of flatbed scanners and industrial microscopic cameras. Capturing lace required particular care — the 3D texture and relief of the material had to be preserved, not flattened. Each digitized entry was then tagged by a designer with rich metadata: original order number, constituent sub-designs, all orders using each sub-design, style details, flags, and searchable keywords.</p>
+
+            <!-- IMAGE SUGGESTION: Macro close-up of a digitized lace showing its texture and structural detail -->
+
+            <p>The result was a context-aware search and retrieval system integrated directly into the company's existing ERP, allowing designers to search by keyword, style attribute, or sub-design reference and instantly browse a visual catalog of relevant laces. The system is still in operation today.</p>
+
+            <!-- IMAGE SUGGESTION: Screenshot of the search and retrieval interface within the ERP system -->
         </div>
     </div>
 </div>
@@ -296,73 +730,184 @@
                             <!-- Project Cards -->
                             <div class="project-grid">
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.1s" data-category="music"  onclick="openModal('modal-gesture')">
-                                    <div class="card-badge music">Music Tech</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.1s" data-category="music ai" onclick="openModal('modal-gesture')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
                                     <div class="card-title">Gesture Detection for Electric Guitar</div>
                                     <div class="card-teaser">IMU-based gesture recognition bridging guitarist technique and stage presence. Part of PhD research at UniTrento.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.15s" data-category="music" onclick="openModal('modal-patterns')">
-                                    <div class="card-badge music">Music Tech</div>
-                                    <div class="card-title">Musical Pattern Detection</div>
-                                    <div class="card-teaser">MIDI Awards 2023 finalist. Real-time phrase detection across symbolic and audio data, from monophonic to polyphonic.</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.15s" data-category="music ai" onclick="openModal('modal-rtpd-fruct')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
+                                    <div class="card-title">Real-Time Musical Pattern Detection: Early Foundations</div>
+                                    <div class="card-teaser">The first paper in the series. Deterministic vs ML methods for real-time monophonic MIDI pattern detection. MIDI Awards 2023 finalist. FRUCT 2020.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.2s" data-category="music" onclick="openModal('modal-multisensory')">
-                                    <div class="card-badge music">Music Tech</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.175s" data-category="music ai cv" onclick="openModal('modal-rtpd-ssim')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                        <div class="card-badge cv">Computer Vision</div>
+                                    </div>
+                                    <div class="card-title">SSIM-Based Real-Time Pattern Detection</div>
+                                    <div class="card-teaser">Repurposed the Structural Similarity Index from Computer Vision to match musical phrases — 95% detection, no training required, runs on embedded hardware. DAFx 2022.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.195s" data-category="music ai" onclick="openModal('modal-rtpd-domp')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
+                                    <div class="card-title">DTW vs RNN for Symbolic Pattern Recognition</div>
+                                    <div class="card-teaser">Head-to-head comparison using the DoMP dataset (4,000 patterns, 40 musicians). RNN holds 98% accuracy at 10 patterns; DTW degrades significantly. Audio Mostly 2024.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.215s" data-category="music ai" onclick="openModal('modal-rtpd-jaes')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
+                                    <div class="card-title">Real-Time Polyphonic Audio Pattern Detection</div>
+                                    <div class="card-teaser">From MIDI to raw audio. RNN achieves F1 0.76 at 14 ms inference on a Raspberry Pi 4 — 74× faster than DTW. DoPP dataset. JAES 2026.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.2s" data-category="music iot" onclick="openModal('modal-multisensory')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge iot">IoT</div>
+                                    </div>
                                     <div class="card-title">Multisensory Concerts</div>
                                     <div class="card-teaser">Designing multi-modal concert experiences that extend beyond the auditory dimension.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.25s" data-category="music" onclick="openModal('modal-datasets')">
-                                    <div class="card-badge music">Music Tech</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.225s" data-category="music iot" onclick="openModal('modal-hotlicks')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge iot">IoT</div>
+                                    </div>
+                                    <div class="card-title">Hot Licks Mapper</div>
+                                    <div class="card-teaser">Web-based visual routing tool that wires SMI musical patterns to stage and audience devices in real time — one-to-one, one-to-many, many-to-many, live from a tablet.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.25s" data-category="music ai" onclick="openModal('modal-datasets')">
+                                    <div class="card-badges">
+                                        <div class="card-badge music">Music Tech</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
                                     <div class="card-title">Datasets for Musical Pattern Detection</div>
                                     <div class="card-teaser">Curated dataset of musician-validated phrase repetitions capturing expressive and stylistic variation.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.3s" data-category="iot" onclick="openModal('modal-covid')">
-                                    <div class="card-badge iot">IoT</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.16s" data-category="ai music" onclick="openModal('modal-stransform')">
+                                    <div class="card-badges">
+                                        <div class="card-badge ai">AI / ML</div>
+                                        <div class="card-badge music">Music Tech</div>
+                                    </div>
+                                    <div class="card-title">Musical Onset Detection via the S-Transform</div>
+                                    <div class="card-teaser">Master's thesis. A training-free beat tracking method using frequency-dependent S-transform band splitting — outperforms pure spectral methods, no prior information or dataset needed.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.3s" data-category="iot cv" onclick="openModal('modal-covid')">
+                                    <div class="card-badges">
+                                        <div class="card-badge iot">IoT</div>
+                                        <div class="card-badge cv">Computer Vision</div>
+                                    </div>
                                     <div class="card-title">Continuous Blood Pressure Monitoring for COVID-19 Patients</div>
                                     <div class="card-teaser">Retrofitted IoT system for remote, continuous SpO₂ and blood pressure monitoring — reducing staff exposure risk.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.35s" data-category="cv" onclick="openModal('modal-carelabels')">
-                                    <div class="card-badge cv">Computer Vision</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.35s" data-category="cv industry" onclick="openModal('modal-carelabels')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                    </div>
                                     <div class="card-title">Automated Quality Checking of Care Labels</div>
-                                    <div class="card-teaser">Computer vision system that reduced garment care label quality check time by ~99.5%.</div>
+                                    <div class="card-teaser">End-to-end CV system — from flatbed scanner to conveyor belt — that cut label QC time by ~99.5% and raised accuracy by 300% through full-batch checking.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.4s" data-category="cv" onclick="openModal('modal-fabric')">
-                                    <div class="card-badge cv">Computer Vision</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.4s" data-category="cv industry" onclick="openModal('modal-fabric')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                    </div>
                                     <div class="card-title">Automated Fabric Quality Checking</div>
-                                    <div class="card-teaser">Macro-camera defect detection for raw fabric rolls, catching artifacts invisible to the human eye.</div>
+                                    <div class="card-teaser">Real-time microscopic camera array detecting weave defects at the loom — cut operator headcount by 50% in the pilot plant.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.45s" data-category="industry" onclick="openModal('modal-prints')">
-                                    <div class="card-badge industry">Industry</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.45s" data-category="cv industry" onclick="openModal('modal-prints')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                    </div>
                                     <div class="card-title">Seamless Digital Prints of Finished Garments</div>
-                                    <div class="card-teaser">Technology enabling continuous, seamless digital print workflows directly on finished garments.</div>
+                                    <div class="card-teaser">On-demand DTG printing on pre-made garments using real-time image warping to align designs across the geometric imperfections of a garment flip.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.5s" data-category="industry" onclick="openModal('modal-retail')">
-                                    <div class="card-badge industry">Industry</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.5s" data-category="iot industry" onclick="openModal('modal-retail')">
+                                    <div class="card-badges">
+                                        <div class="card-badge iot">IoT</div>
+                                        <div class="card-badge industry">Industry</div>
+                                    </div>
                                     <div class="card-title">Smart Retail Racks</div>
                                     <div class="card-teaser">Sensor-equipped retail racks enabling smarter inventory interaction and customer engagement.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
-                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.55s" data-category="industry" onclick="openModal('modal-prototyping')">
-                                    <div class="card-badge industry">Industry</div>
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.55s" data-category="cv industry iot" onclick="openModal('modal-prototyping')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                        <div class="card-badge iot">IoT</div>
+                                    </div>
                                     <div class="card-title">Smart Prototyping for Garment Prints</div>
                                     <div class="card-teaser">AR projection table that lets customers visualize print designs on real garments before production.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.6s" data-category="cv industry ai" onclick="openModal('modal-techpack')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                        <div class="card-badge ai">AI / ML</div>
+                                    </div>
+                                    <div class="card-title">Tech Pack Digitization</div>
+                                    <div class="card-teaser">Pre-LLM pipeline using OCR and layout segmentation to convert a large physical archive of garment blueprints into a searchable digital format.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.65s" data-category="industry" onclick="openModal('modal-aeoon')">
+                                    <div class="card-badge industry">Industry</div>
+                                    <div class="card-title">Aeoon DTG Printer Integration</div>
+                                    <div class="card-teaser">Reverse-engineered a closed PLC-driven DTG printer to synchronize with a custom loading mechanism — three closed-loop subsystems in tight coordination via custom C++.</div>
+                                    <div class="card-arrow">Explore →</div>
+                                </div>
+
+                                <div class="project-card wow animate__fadeInLeft" data-wow-delay="0.7s" data-category="cv industry" onclick="openModal('modal-lace')">
+                                    <div class="card-badges">
+                                        <div class="card-badge cv">Computer Vision</div>
+                                        <div class="card-badge industry">Industry</div>
+                                    </div>
+                                    <div class="card-title">Lace Archive and Search System</div>
+                                    <div class="card-teaser">Digitized a physical lace catalog for Noyon Dentelle using microscopic cameras and flatbed scanners, then built a context-aware ERP-integrated search system still in use today.</div>
                                     <div class="card-arrow">Explore →</div>
                                 </div>
 
@@ -435,7 +980,7 @@
 
             var filter = this.dataset.filter;
             document.querySelectorAll('.project-card').forEach(function (card) {
-                if (filter === 'all' || card.dataset.category === filter) {
+                if (filter === 'all' || card.dataset.category.split(' ').includes(filter)) {
                     card.classList.remove('hidden');
                 } else {
                     card.classList.add('hidden');
