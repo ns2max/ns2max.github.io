@@ -81,7 +81,16 @@
             <h3>Combining Pattern and Gesture — The State Machine</h3>
             <p>The outputs of both systems are combined by a Hierarchical Finite State Machine (HFSM) with three states: <em>Idle</em> → <em>Pattern Detected</em> → <em>Gesture Detected</em>. A trigger fires only when the correct musical pattern is immediately followed by the corresponding gesture — meaning stray motions during silence and mis-played patterns are both gracefully ignored. This design reflects how guitarists actually perform: the music cues the gesture, not the other way around.</p>
 
-            <!-- IMAGE SUGGESTION: Figure 4 from the paper — HFSM diagram showing the three states and transition conditions -->
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/gesture-guitar/state_machine.drawio.png" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/gesture-guitar/state_machine.drawio.png" alt="reference">
+                    </a>
+                    <div class="img-caption">HFSM diagram for RTPD and gesture detection.</div>
+                </div>
+                 <div class="modal-img-item">
+                </div>
+            </div>
 
             <h3>Technical Evaluation</h3>
             <p>The system was evaluated using a 500-event test corpus covering five conditions: correct pattern→gesture sequences (P1→G1, P2→G2), cross-mapped sequences (wrong gesture for the pattern), pattern-only events, and gesture-only events. Results across the full corpus:</p>
@@ -107,7 +116,17 @@
             <p>This is the paper that started the series. Written while I was an independent researcher based in Colombo, Sri Lanka, in collaboration with Prof. Carlo Fischione (KTH Royal Institute of Technology) and Prof. Luca Turchet (University of Trento), it was published at the 27th FRUCT Association Conference.</p>
             <p>The central question was simple but unexplored: can a musical instrument detect the patterns it is playing, in real time, as they happen — with no recording, no offline processing, and no knowledge of what comes next? This matters enormously for IoMusT applications, where a smart instrument needs to identify a phrase as soon as it is played and instantly fire a control message to connected devices.</p>
 
-            <!-- IMAGE SUGGESTION: A smart cajón with embedded computing device — the running example used throughout the paper -->
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/smart_cajon.png" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/smart_cajon.png" alt="reference">
+                    </a>
+                    <div class="img-caption">A smart cajón with embedded computing device.</div>
+                </div>
+                 <div class="modal-img-item">
+                </div>
+            </div>
 
             <h3>Note Representation</h3>
             <p>We introduced a compact MIDI-based matrix representation encoding three core attributes per note: pitch (MIDI number), amplitude (MIDI velocity), and duration (seconds). A musical pattern is then a sequence of such column matrices, and detection becomes a sequence matching problem on a live stream.</p>
@@ -346,7 +365,16 @@
             <p>Conventional garment production has a long lead time — fabric is printed, then cut, then sewn. This project flipped the model: maintain a stock of pre-made white garments and print the design directly onto the finished piece, on demand. The company had developed a mechanism to do this by loading a garment onto a flat plate with knife edges and printing via a DTG printer.</p>
             <p>The core challenge was geometric. A design is split into two matching halves — one per side of the garment. After the first side is printed, the garment is flipped and the second half printed. But the flip is never geometrically perfect, and no garment is perfectly uniform in shape. Two halves that align in the design file rarely align on the physical garment.</p>
 
-            <!-- IMAGE SUGGESTION: Before/after showing misaligned vs. corrected print halves on a finished garment -->
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/mas/promptly-align.JPG" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/mas/promptly-align.JPG" alt="reference">
+                    </a>
+                    <div class="img-caption">A garment, with the design printed ont he two sides, perfectly aligned at the seam.</div>
+                </div>
+                 <div class="modal-img-item">
+                </div>
+            </div>
 
             <p>My task was to perform an intentional, calculated image distortion so that each half conforms to the actual geometry of the garment at print time. Upon loading a garment, a camera captures its geometry. The design is then warped to fit the real garment before the print command is sent — and the same process runs for the reverse side.</p>
 
@@ -422,6 +450,16 @@
                     </a>
                     <div class="img-caption">dashboard</div>
                 </div>
+            </div>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/covid-1.jpg" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/covid-1.jpg" alt="retrofitted SpO2 meter">
+                    </a>
+                    <div class="img-caption">retrofitted SpO₂ meter</div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -635,6 +673,21 @@
             <!-- IMAGE SUGGESTION: Physical lace catalog — binders or folders of samples spread on a table -->
 
             <p>Digitization was done using a combination of flatbed scanners and industrial microscopic cameras. Capturing lace required particular care — the 3D texture and relief of the material had to be preserved, not flattened. Each digitized entry was then tagged by a designer with rich metadata: original order number, constituent sub-designs, all orders using each sub-design, style details, flags, and searchable keywords.</p>
+
+            <div class="modal-image-grid">
+                <div class="modal-img-item">
+                    <a href="images/projects/mas/lace1.png" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/mas/lace1.png" alt="reference">
+                    </a>
+                    <div class="img-caption">Macro close-up of a digitized laces.</div>
+                </div>
+                 <div class="modal-img-item">
+                    <a href="images/projects/mas/lace2.png" target="_blank" data-effect="mfp-zoom-in">
+                        <img src="images/projects/mas/lace2.png" alt="reference">
+                    </a>
+                    <div class="img-caption">Macro close-up of a digitized laces.</div>
+                </div>
+            </div>
 
             <!-- IMAGE SUGGESTION: Macro close-up of a digitized lace showing its texture and structural detail -->
 
