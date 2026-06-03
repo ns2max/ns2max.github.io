@@ -14,6 +14,20 @@
     <link rel="stylesheet" href="css/magnific-popup.min.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        /* Global iframe rule – controls video size, no extra classes needed */
+        iframe[src*="youtube.com"],
+        iframe[src*="youtu.be"] {
+            display: block;
+            width: 100%;
+            max-width: 1100px;      /* control max width globally here */
+            margin: 1.5rem auto;    /* center inside content column */
+            aspect-ratio: 16 / 9;   /* keep 16:9 */
+            height: auto;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -37,8 +51,9 @@
                         <li><a href="publications.html">Publications</a></li>
                         <li><a href="music.html">Music</a></li>
                         <li><a href="photography.html">Photography</a></li>
-                        <!-- <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="contact.html">Contact</a></li> -->
+                        <!-- You can add this if you want it in the nav:
+                        <li><a href="demos.html">Demos</a></li>
+                        -->
                     </ul>
 
                     <div class="menu-contacts">
@@ -100,112 +115,67 @@
             <div class="content-inner">
                 <div class="right">
                     <div class="left-text">
-
                         <h2 class="title wow animate__slideInLeft" data-wow-delay="0.1s">Demos & Concerts</h2>
                         <div class="subtitle wow animate__slideInLeft" data-wow-delay="0.2s">
-                            Selected performances and system demos of smart musical instruments and real-time pattern detection.
+                            Selected demos of smart musical instruments and real-time musical pattern detection in performance.
                         </div>
 
                         <div class="about-desc">
 
-                            <!-- Featured video grid -->
-                            <div class="video-grid">
+                            <!-- Video 1 -->
+                            <p class="wow animate__fadeInLeft" data-wow-delay="0.25s">
+                                <strong class="color-white">
+                                    An Internet of Musical Things Performance Ecosystem Based on Real-Time Musical Pattern Recognition
+                                </strong><br>
+                                Live performance showing smart instruments triggering lights, visuals, and devices via embedded pattern detection.
+                            </p>
+                            <iframe
+                                src="https://www.youtube.com/embed/jfm5L3DYIcc"
+                                title="IoMusT Performance Ecosystem Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                            <hr>
+                            </br></br>
 
-                                <!-- IoMusT performance ecosystem -->
-                                <div class="video-card wow animate__fadeInLeft" data-wow-delay="0.2s">
-                                    <div class="video-meta">
-                                        <span class="pub-year">2024 - May</span>
-                                        <span class="video-tag">IoMusT Performance</span>
-                                    </div>
-                                    <h3 class="video-title">
-                                        An Internet of Musical Things Performance Ecosystem Based on Real-Time Musical Pattern Recognition
-                                    </h3>
-                                    <p class="video-description">
-                                        Live performance demonstrating how embedded musical pattern recognition on a smart instrument can control lights, visuals, and peripheral devices in an Internet of Musical Things setup.
-                                    </p>
-                                    <div class="video-embed">
-                                        <div class="video-wrapper">
-                                            <iframe
-                                                src="https://www.youtube.com/embed/jfm5L3DYIcc"
-                                                title="IoMusT Performance Ecosystem Demo"
-                                                frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen>
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                    <a href="https://youtu.be/jfm5L3DYIcc" target="_blank" class="video-link">
-                                        <i class="fa-brands fa-youtube"></i> Watch on YouTube
-                                    </a>
-                                </div>
 
-                                <!-- Multisensory concert -->
-                                <div class="video-card wow animate__fadeInLeft" data-wow-delay="0.3s">
-                                    <div class="video-meta">
-                                        <span class="pub-year">2024 - Oct</span>
-                                        <span class="video-tag">Multisensory Concert</span>
-                                    </div>
-                                    <h3 class="video-title">
-                                        Multisensory Concert Enabled by Smart Musical Instruments and Real-Time Musical Pattern Detection
-                                    </h3>
-                                    <p class="video-description">
-                                        Concert experience where embedded pattern detection on smart instruments drives lighting, projections, and other sensory elements in real time.
-                                    </p>
-                                    <div class="video-embed">
-                                        <div class="video-wrapper">
-                                            <iframe
-                                                src="https://www.youtube.com/embed/axEHkdnxFB8"
-                                                title="Multisensory Concert Demo"
-                                                frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen>
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                    <a href="https://youtu.be/axEHkdnxFB8" target="_blank" class="video-link">
-                                        <i class="fa-brands fa-youtube"></i> Watch on YouTube
-                                    </a>
-                                </div>
+                            <!-- Video 2 -->
+                            <p class="wow animate__fadeInLeft" data-wow-delay="0.35s">
+                                <strong class="color-white">
+                                    Multisensory Concert Enabled by Smart Musical Instruments and Real-Time Musical Pattern Detection
+                                </strong><br>
+                                Concert where musical patterns control stage lights, smoke, MR visuals, and haptic feedback for the audience.
+                            </p>
+                            <iframe
+                                src="https://www.youtube.com/embed/axEHkdnxFB8"
+                                title="Multisensory Concert Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                            <hr>
+                            </br></br>
 
-                                <!-- Real-time monophonic pattern recognition (MIDI) -->
-                                <div class="video-card wow animate__fadeInLeft" data-wow-delay="0.4s">
-                                    <div class="video-meta">
-                                        <span class="pub-year">2023 - Sep</span>
-                                        <span class="video-tag">Pattern Recognition</span>
-                                    </div>
-                                    <h3 class="video-title">
-                                        Real-Time Monophonic Pattern Recognition System Based on MIDI Data
-                                    </h3>
-                                    <p class="video-description">
-                                        Technical demo of the MIDI-based real-time pattern recognition system, showcasing detection of symbolic monophonic patterns for performance interaction.
-                                    </p>
-                                    <div class="video-embed">
-                                        <div class="video-wrapper">
-                                            <iframe
-                                                src="https://www.youtube.com/embed/gkOqfOT8zXM"
-                                                title="Real-Time Monophonic Pattern Recognition Demo"
-                                                frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen>
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                    <a href="https://youtu.be/gkOqfOT8zXM" target="_blank" class="video-link">
-                                        <i class="fa-brands fa-youtube"></i> Watch on YouTube
-                                    </a>
-                                </div>
+                            <!-- Video 3 -->
+                            <p class="wow animate__fadeInLeft" data-wow-delay="0.45s">
+                                <strong class="color-white">
+                                    Real-Time Monophonic Pattern Recognition System Based on MIDI Data
+                                </strong><br>
+                                Technical demo of the symbolic (MIDI-based) real-time pattern recognition system used as an early prototype.
+                            </p>
+                            <iframe
+                                src="https://www.youtube.com/embed/gkOqfOT8zXM"
+                                title="Real-Time Monophonic Pattern Recognition Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
 
-                            </div>
-                            <!-- end video-grid -->
-
-                            <!-- Optional: link back to publications / talks -->
                             <p class="wow animate__fadeInLeft" data-wow-delay="0.6s">
                                 For related papers, talks, and datasets, see the
                                 <a href="publications.html">Publications</a> and
                                 <a href="research.html">Research</a> pages.
                             </p>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -221,7 +191,7 @@
 </footer>
 
 <script src="js/jquery-3.7.0.min.js"></script>
-script src="js/swiper-bundle.min.js"></script>
+<script src="js/swiper-bundle.min.js"></script>
 <script src="js/wow.min.js"></script>
 <script src="js/masonry.pkgd.min.js"></script>
 <script src="js/imagesloaded.pkgd.min.js"></script>
