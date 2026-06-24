@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NISHAL</title>
+
+    <link rel="shortcut icon" href="images/icon-black.svg" type="image/x-icon">
+    <link rel="icon" href="images/icon-black.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .dataset-card {
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .dataset-card h3 {
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            font-size: 1.15rem;
+            letter-spacing: 0.03em;
+        }
+
+        .dataset-card .ds-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+            margin: 0.75rem 0 1rem;
+            font-size: 0.82rem;
+            opacity: 0.75;
+        }
+
+        .dataset-card .ds-meta span {
+            white-space: nowrap;
+        }
+
+        .dataset-card p {
+            margin-bottom: 0;
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        .dataset-card .ds-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.25);
+            margin-right: 0.35rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.8;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-overlay"></div>
+
+<main class="main">
+    <div class="s-about">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="menu-wrap">
+                <a href="index.html" class="sidebar-logo">
+                    <img src="images/logo-gray.svg" alt="Nishal">
+                </a>
+                <nav class="menu-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About me</a></li>
+                        <li><a href="cv.html">CV</a></li>
+                        <li><a href="research.html">Research</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="music.html">Music</a></li>
+                        <li><a href="photography.html">Photography</a></li>
+                    </ul>
+
+                    <div class="menu-contacts">
+                        <a href="https://t.me/ns2max" target="_blank" class="menu-contacts__item">
+                            <span class="menu-contacts__icon">
+                                <i class="fab fa-telegram"></i>
+                            </span>
+                            <p>ns2max</p>
+                        </a>
+
+                        <a href="index.html" class="menu-contacts__item">
+                            <span class="menu-contacts__icon">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <p>nishal.silva@unitn.it</p>
+                        </a>
+
+                        <div class="menu-social">
+                            <a href="https://www.linkedin.com/in/nishal-silva/" target="_blank" class="menu-social__item">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                            <a href="https://www.researchgate.net/profile/Nishal-Silva-3" target="_blank" class="menu-social__item">
+                                <i class="fa-brands fa-researchgate"></i>
+                            </a>
+                            <a href="https://orcid.org/0000-0003-0406-7459" target="_blank" class="menu-social__item">
+                                <i class="fa-brands fa-orcid"></i>
+                            </a>
+                            <a href="https://github.com/ns2max" target="_blank" class="menu-social__item">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                            <a href="https://www.instagram.com/nishal91" target="_blank" class="menu-social__item">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="menu-close__wrap">
+                        <a href="#" class="menu-close">
+                            <img style="transform: rotate(180deg);" src="images/arrow-right.svg" alt="">
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+            <a href="index.html" class="logo">
+                <img src="images/logo-gray.svg" alt="">
+            </a>
+
+            <a href="#" class="hamburger-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <!-- end sidebar -->
+
+        <!-- Content -->
+        <div class="content-page about-content content" style="background-image: url('images/image-bg-3.jpg');">
+            <div class="content-inner">
+                <div class="right">
+                    <div class="left-text">
+                        <h2 class="title wow animate__slideInLeft" data-wow-delay="0.1s">Datasets</h2>
+                        <div class="subtitle wow animate__slideInLeft">
+                            Musical performance datasets for expressive variation modeling, pattern recognition, and groove analysis.
+                        </div>
+
+                        <div class="about-desc">
+
+                            <!-- DoMP -->
+                            <div class="dataset-card wow animate__fadeInLeft" data-wow-delay="0.1s">
+                                <h3 class="color-white">DoMP <a href="https://doi.org/10.5281/zenodo.10818617" target="_blank"><i class="fa-solid fa-link"></i></a></h3>
+                                <span class="ds-tag">MIDI</span>
+                                <span class="ds-tag">Monophonic</span>
+                                <span class="ds-tag">Melodic</span>
+                                <div class="ds-meta">
+                                    <span><i class="fa fa-file" style="margin-right:0.35rem;"></i>4,392 files</span>
+                                    <span><i class="fa fa-user" style="margin-right:0.35rem;"></i>40 performers</span>
+                                    <span><i class="fa fa-music" style="margin-right:0.35rem;"></i>333 patterns</span>
+                                    <span><i class="fa fa-guitar" style="margin-right:0.35rem;"></i>Piano &amp; Guitar</span>
+                                </div>
+                                <p>
+                                    <strong>Dataset of Monophonic Patterns.</strong> MIDI recordings of monophonic melodic patterns performed by 40 anonymous musicians (20 pianists, 20 guitarists). Each pattern family consists of one ground-truth reference and multiple expressive variations differing in timing, dynamics, articulation, and ornamentation. Mean 13.2 versions per pattern (range 4–32). Designed for expressive music generation, variation modeling, and monophonic performance analysis.
+                                </p>
+                            </div>
+
+                            <!-- DoPP -->
+                            <div class="dataset-card wow animate__fadeInLeft" data-wow-delay="0.1s">
+                                <h3 class="color-white">DoPP <a href="https://doi.org/10.5281/zenodo.14497998" target="_blank"><i class="fa-solid fa-link"></i></a></h3>
+                                <span class="ds-tag">Audio</span>
+                                <span class="ds-tag">Polyphonic</span>
+                                <span class="ds-tag">WAV</span>
+                                <div class="ds-meta">
+                                    <span><i class="fa fa-file" style="margin-right:0.35rem;"></i>2,276 files</span>
+                                    <span><i class="fa fa-user" style="margin-right:0.35rem;"></i>20 performers</span>
+                                    <span><i class="fa fa-music" style="margin-right:0.35rem;"></i>176 patterns</span>
+                                    <span><i class="fa fa-guitar" style="margin-right:0.35rem;"></i>Piano &amp; Guitar</span>
+                                </div>
+                                <p>
+                                    <strong>Dataset of Polyphonic Patterns.</strong> Mono audio recordings (WAV, 48 kHz, 16-bit PCM) of expressive musical performances by 20 anonymous musicians (10 pianists, 10 guitarists). Each pattern family pairs a ground-truth recording with expressive variations spanning ornamental, harmonic, and structural divergence. 89.3% of variation pairs remain harmonically close (chroma similarity &gt;0.9), reflecting predominantly ornamental variation. Mean duration 5.2 s per file. Designed for audio-domain expressive performance analysis and generation.
+                                </p>
+                            </div>
+
+                            <!-- DoDP -->
+                            <div class="dataset-card wow animate__fadeInLeft" data-wow-delay="0.1s">
+                                <h3 class="color-white">DoDP <a href="https://doi.org/10.5281/zenodo.14497974" target="_blank"><i class="fa-solid fa-link"></i></a></h3>
+                                <span class="ds-tag">MIDI</span>
+                                <span class="ds-tag">Drums</span>
+                                <span class="ds-tag">Rhythmic</span>
+                                <div class="ds-meta">
+                                    <span><i class="fa fa-file" style="margin-right:0.35rem;"></i>994 files</span>
+                                    <span><i class="fa fa-user" style="margin-right:0.35rem;"></i>8 performers</span>
+                                    <span><i class="fa fa-music" style="margin-right:0.35rem;"></i>77 patterns</span>
+                                    <span><i class="fa fa-drum" style="margin-right:0.35rem;"></i>Percussion</span>
+                                </div>
+                                <p>
+                                    <strong>Dataset of Drum Patterns, v1.</strong> MIDI recordings of rhythmic drum patterns by 8 anonymous percussionists using GM standard drum notes (kick, snare, hi-hat, toms, cymbals). Each pattern family pairs one ground-truth with expressive variations differing in timing, velocity, density, and instrumentation choices. Mean 12.9 versions per pattern (range 10–51). Note: files mix ticks-per-beat (480 or 960) and drum channel (0 or 9) due to differing DAW export settings — both are documented in metadata. Designed for drum pattern generation, groove analysis, and rhythmic variation modeling.
+                                </p>
+                            </div>
+
+                            <!-- DoDP2 -->
+                            <div class="dataset-card wow animate__fadeInLeft" data-wow-delay="0.1s">
+                                <h3 class="color-white">DoDP2 <a href="https://doi.org/10.5281/zenodo.18395007" target="_blank"><i class="fa-solid fa-link"></i></a></h3>
+                                <span class="ds-tag">MIDI</span>
+                                <span class="ds-tag">Drums</span>
+                                <span class="ds-tag">Rhythmic</span>
+                                <div class="ds-meta">
+                                    <span><i class="fa fa-file" style="margin-right:0.35rem;"></i>2,177 files</span>
+                                    <span><i class="fa fa-user" style="margin-right:0.35rem;"></i>10 performers</span>
+                                    <span><i class="fa fa-music" style="margin-right:0.35rem;"></i>100 patterns</span>
+                                    <span><i class="fa fa-drum" style="margin-right:0.35rem;"></i>Percussion</span>
+                                </div>
+                                <p>
+                                    <strong>Dataset of Drum Patterns, v2.</strong> Complementory to DoDP, featuring 10 anonymous percussionists, uniform MIDI encoding (96 ticks/beat, channel 0), and compact loop patterns (mean 3.9 beats, max 6.9 beats). Substantially denser sampling: mean 21.8 versions per pattern (range 19–59). Introduces artist-level <em>template patterns</em> (<code>patternID = -1</code>) — 194 files representing each performer's baseline rhythmic character, usable as style anchors or zero-shot conditions. Designed for groove modeling, style transfer, and densely-sampled rhythmic variation research.
+                                </p>
+                            </div>
+
+                            <p class="wow animate__fadeInLeft" data-wow-delay="0.1s">
+                                All datasets share a unified artist ID namespace and flat file naming scheme (<code>artistID_patternID_versionID</code>). For related publications, see the
+                                <a href="publications.html">Publications</a> and
+                                <a href="research.html">Research</a> pages.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end content-page -->
+
+    </div><!-- end s-about -->
+</main>
+
+<footer class="site-footer">
+    <div class="footer-copyright">
+        © 2026
+    </div>
+</footer>
+
+<script src="js/jquery-3.7.0.min.js"></script>
+<script src="js/swiper-bundle.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/masonry.pkgd.min.js"></script>
+<script src="js/imagesloaded.pkgd.min.js"></script>
+<script src="js/magnific-popup.min.js"></script>
+<script src="js/blazy.min.js"></script>
+<script src="js/parazoom.min.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
