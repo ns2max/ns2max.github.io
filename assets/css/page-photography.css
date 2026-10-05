@@ -26,3 +26,15 @@
   justify-content: center;
   margin-top: 40px;
 }
+
+.shot-cap a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shot-cap .ig-ic {
+  width: 1.1em;
+  height: 1.1em;
+  fill: currentColor;
+}
