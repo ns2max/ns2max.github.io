@@ -116,6 +116,10 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
+.vgrid-single {
+  grid-template-columns: minmax(0, 640px);
+}
+
 .yt {
   position: relative;
   aspect-ratio: 16 / 9;
