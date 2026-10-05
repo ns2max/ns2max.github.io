@@ -1,0 +1,77 @@
+/* Styles used only by contact page. */
+
+.contact-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.contact-grid .panel h3 {
+  color: var(--cyan);
+  font-size: 1.1rem;
+  letter-spacing: 0.16em;
+}
+
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 24px;
+  max-width: 860px;
+  margin: 0 auto 44px;
+}
+
+.contact-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--bone);
+}
+
+.contact-links .ic {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--blood);
+  border-radius: 50%;
+  color: var(--blood);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.contact-links svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+.credit {
+  margin: 28px 0 0;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.contact-links em {
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 0.98rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.contact-links a:hover .ic {
+  background: rgba(201, 169, 107, 0.14);
+  color: var(--blood-hot);
+  border-color: var(--blood-hot);
+}
+
+.contact-links a:hover em {
+  color: var(--bone);
+}
+
+@media (max-width: 700px) {
+  .contact-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,28 @@
+/* Styles used only by photography page. */
+
+.shot {
+  margin: 0 0 14px;
+  break-inside: avoid;
+}
+
+.shot a {
+  margin: 0 !important;
+}
+
+.shot-cap {
+  font-size: 0.72rem;
+  padding: 6px 2px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.shot-cap {
+  color: var(--muted);
+  font-family: var(--f-head);
+}
+
+.btn-row.centered {
+  justify-content: center;
+  margin-top: 40px;
+}
