@@ -1,59 +1,93 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Research · Nishal Silva</title>
-<meta name="description" content="Research projects in smart musical instruments, real-time pattern detection, computer vision and IoT.">
-<meta name="theme-color" content="#232326">
-<meta property="og:title" content="Research · Nishal Silva">
-<meta property="og:description" content="Research projects in smart musical instruments, real-time pattern detection, computer vision and IoT.">
-<meta property="og:image" content="assets/thumbs/bg.jpg">
-<meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="alternate icon" href="assets/favicon.ico">
-<link rel="apple-touch-icon" href="assets/favicon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Marcellus+SC&family=Rozha+One&family=Cormorant+SC:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/layout.css">
-<link rel="stylesheet" href="assets/css/components.css">
-<link rel="stylesheet" href="assets/css/page-research.css">
-<script>document.documentElement.className+=' js'</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research · Nishal Silva</title>
+  <meta name="description" content="Research projects in smart musical instruments, real-time pattern detection, computer vision and IoT.">
+  <meta name="theme-color" content="#232326">
+  <meta property="og:title" content="Research · Nishal Silva">
+  <meta property="og:description" content="Research projects in smart musical instruments, real-time pattern detection, computer vision and IoT.">
+  <meta property="og:image" content="assets/thumbs/bg.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="alternate icon" href="assets/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Marcellus+SC&family=Rozha+One&family=Cormorant+SC:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/page-research.css">
+  <script>
+    document.documentElement.className+=' js'
+  </script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="index.html"><img class="mask" src="assets/art/mask.svg" alt=""><span class="brand-word">NISHAL</span></a>
-    <button class="burger" aria-expanded="false" aria-controls="menu">MENU</button>
-    <ul class="menu" id="menu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="research.html" aria-current="page">Research</a></li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="music.html">Music</a></li>
-      <li><a href="photography.html">Photography</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </div>
-</header>
-<main id="main">
-<header class="page-hero"><div class="bgimg"></div><img class="banner" src="assets/art/banner-research.svg" alt=""><div class="wrap"><p class="eyebrow">the research library</p><h1>Research</h1><p class="sub">Over a decade across music technology, computer vision, IoT and industry. <br> Open a leaf to read it.</p></div></header>
-
-<section id="industry" class="compact-sm">
-  <div class="wrap">
-    <div class="toolbar" role="group" aria-label="Filter projects"><button class="chip" data-tag="all" aria-pressed="true">All</button><button class="chip" data-tag="Music Tech" aria-pressed="false">Music Tech</button><button class="chip" data-tag="AI / ML" aria-pressed="false">AI / ML</button><button class="chip" data-tag="Computer Vision" aria-pressed="false">Computer Vision</button><button class="chip" data-tag="IoT" aria-pressed="false">IoT</button><button class="chip" data-tag="Industry" aria-pressed="false">Industry</button>
-      <input class="search" id="q" type="search" placeholder="search projects…" aria-label="Search projects">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img class="mask" src="assets/art/mask.svg" alt=""><span class="brand-word">NISHAL</span></a>
+      <button class="burger" aria-expanded="false" aria-controls="menu">MENU</button>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="research.html" aria-current="page">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="music.html">Music</a></li>
+        <li><a href="photography.html">Photography</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
-    <div class="cards" id="cards"><button class="panel rcard" id="gesture-detection-for-electric-guitar" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_gesture-detection-for-electric-guitar.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Gesture Detection for Electric Guitar</h3><p>IMU-based gesture recognition bridging guitarist technique and stage presence. Part of PhD research at UniTrento.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="real-time-musical-pattern-detection-early-founda" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_real-time-musical-pattern-detection-early-founda.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Real-Time Musical Pattern Detection: Early Foundations</h3><p>The first paper in the series. Deterministic vs ML methods for real-time monophonic MIDI pattern detection. MIDI Awards 2023 finalist. FRUCT 2020.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="ssim-based-real-time-pattern-detection" data-tags="Music Tech|AI / ML|Computer Vision" aria-haspopup="dialog"><div class="cover glyph glyph-a"><b>SSIM</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span><span class="tag">Computer Vision</span></div><h3>SSIM-Based Real-Time Pattern Detection</h3><p>Repurposed the Structural Similarity Index from Computer Vision to match musical phrases — 95% detection, no training required, runs on embedded hardware. DAFx 2022.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="dtw-vs-rnn-for-symbolic-pattern-recognition" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-b"><b>DTW</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>DTW vs RNN for Symbolic Pattern Recognition</h3><p>Head-to-head comparison using the DoMP dataset (4,000 patterns, 40 musicians). RNN holds 98% accuracy at 10 patterns; DTW degrades significantly. Audio Mostly 2024.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="real-time-polyphonic-audio-pattern-detection" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>JAES</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Real-Time Polyphonic Audio Pattern Detection</h3><p>From MIDI to raw audio. RNN achieves F1 0.76 at 14 ms inference on a Raspberry Pi 4 — 74× faster than DTW. DoPP dataset. JAES 2026.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="multisensory-concerts" data-tags="Music Tech|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_multisensory-concerts.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">IoT</span></div><h3>Multisensory Concerts</h3><p>Designing multi-modal concert experiences that extend beyond the auditory dimension.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="hot-licks-mapper" data-tags="Music Tech|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_hot-licks-mapper.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">IoT</span></div><h3>Hot Licks Mapper</h3><p>Web-based visual routing tool that wires SMI musical patterns to stage and audience devices in real time — one-to-one, one-to-many, many-to-many, live from a tablet.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="datasets-for-musical-pattern-detection" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-b"><b>DoMP</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Datasets for Musical Pattern Detection</h3><p>Curated dataset of musician-validated phrase repetitions capturing expressive and stylistic variation.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="musical-onset-detection-via-the-s-transform" data-tags="AI / ML|Music Tech" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>S(t)</b></div><div class="rbody"><div class="tags"><span class="tag">AI / ML</span><span class="tag t-music">Music Tech</span></div><h3>Musical Onset Detection via the S-Transform</h3><p>Master&#x27;s thesis. A training-free beat tracking method using frequency-dependent S-transform band splitting — outperforms pure spectral methods, no prior information or dataset needed.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="continuous-blood-pressure-monitoring-for-covid-1" data-tags="IoT|Computer Vision" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_continuous-blood-pressure-monitoring-for-covid-1.jpg"></div><div class="rbody"><div class="tags"><span class="tag">IoT</span><span class="tag">Computer Vision</span></div><h3>Continuous Blood Pressure Monitoring for COVID-19 Patients</h3><p>Retrofitted IoT system for remote, continuous SpO₂ and blood pressure monitoring — reducing staff exposure risk.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="automated-quality-checking-of-care-labels" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_automated-quality-checking-of-care-labels.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Automated Quality Checking of Care Labels</h3><p>End-to-end CV system — from flatbed scanner to conveyor belt — that cut label QC time by ~99.5% and raised accuracy by 300% through full-batch checking.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="automated-fabric-quality-checking" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_automated-fabric-quality-checking.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Automated Fabric Quality Checking</h3><p>Real-time microscopic camera array detecting weave defects at the loom — cut operator headcount by 50% in the pilot plant.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="seamless-digital-prints-of-finished-garments" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_seamless-digital-prints-of-finished-garments.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Seamless Digital Prints of Finished Garments</h3><p>On-demand DTG printing on pre-made garments using real-time image warping to align designs across the geometric imperfections of a garment flip.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="smart-retail-racks" data-tags="IoT|Industry" aria-haspopup="dialog"><div class="cover glyph glyph-d"><b>IoT</b></div><div class="rbody"><div class="tags"><span class="tag">IoT</span><span class="tag t-industry">Industry</span></div><h3>Smart Retail Racks</h3><p>Sensor-equipped retail racks enabling smarter inventory interaction and customer engagement.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="smart-prototyping-for-garment-prints" data-tags="Computer Vision|Industry|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_smart-prototyping-for-garment-prints.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span><span class="tag">IoT</span></div><h3>Smart Prototyping for Garment Prints</h3><p>AR projection table that lets customers visualize print designs on real garments before production.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="tech-pack-digitization" data-tags="Computer Vision|Industry|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_tech-pack-digitization.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span><span class="tag">AI / ML</span></div><h3>Tech Pack Digitization</h3><p>Pre-LLM pipeline using OCR and layout segmentation to convert a large physical archive of garment blueprints into a searchable digital format.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="aeoon-dtg-printer-integration" data-tags="Industry" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>PLC</b></div><div class="rbody"><div class="tags"><span class="tag t-industry">Industry</span></div><h3>Aeoon DTG Printer Integration</h3><p>Reverse-engineered a closed PLC-driven DTG printer to synchronize with a custom loading mechanism — three closed-loop subsystems in tight coordination via custom C++.</p><span class="more">Open the leaf →</span></div></button><button class="panel rcard" id="lace-archive-and-search-system" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_lace-archive-and-search-system.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Lace Archive and Search System</h3><p>Digitized a physical lace catalog for Noyon Dentelle using microscopic cameras and flatbed scanners, then built a context-aware ERP-integrated search system still in use today.</p><span class="more">Open the leaf →</span></div></button></div>
-    <p class="empty" id="none">No leaf in this manuscript matches your search.</p>
-    <p class="muted foot-note">Datasets and papers live on the <a href="publications.html#datasets">Publications</a> page; videos on <a href="publications.html#demos">Demos</a>.</p>
-  </div>
-</section>
-<dialog id="dossier" aria-labelledby="d-title">
+  </header>
+  <main id="main">
+    <header class="page-hero">
+      <div class="bgimg"></div>
+      <img class="banner" src="assets/art/banner-research.svg" alt="">
+      <div class="wrap">
+        <p class="eyebrow">the research library</p>
+        <h1>Research</h1>
+        <p class="sub">Over a decade across music technology, computer vision, IoT and industry. <br> Open a leaf to read it.</p>
+      </div>
+    </header>
+    <section id="industry" class="compact-sm">
+      <div class="wrap">
+        <div class="toolbar" role="group" aria-label="Filter projects">
+          <button class="chip" data-tag="all" aria-pressed="true">All</button>
+          <button class="chip" data-tag="Music Tech" aria-pressed="false">Music Tech</button>
+          <button class="chip" data-tag="AI / ML" aria-pressed="false">AI / ML</button>
+          <button class="chip" data-tag="Computer Vision" aria-pressed="false">Computer Vision</button>
+          <button class="chip" data-tag="IoT" aria-pressed="false">IoT</button>
+          <button class="chip" data-tag="Industry" aria-pressed="false">Industry</button>
+          <input class="search" id="q" type="search" placeholder="search projects…" aria-label="Search projects">
+        </div>
+        <div class="cards" id="cards">
+          <button class="panel rcard" id="gesture-detection-for-electric-guitar" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_gesture-detection-for-electric-guitar.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Gesture Detection for Electric Guitar</h3><p>IMU-based gesture recognition bridging guitarist technique and stage presence. Part of PhD research at UniTrento.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="real-time-musical-pattern-detection-early-founda" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_real-time-musical-pattern-detection-early-founda.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Real-Time Musical Pattern Detection: Early Foundations</h3><p>The first paper in the series. Deterministic vs ML methods for real-time monophonic MIDI pattern detection. MIDI Awards 2023 finalist. FRUCT 2020.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="ssim-based-real-time-pattern-detection" data-tags="Music Tech|AI / ML|Computer Vision" aria-haspopup="dialog"><div class="cover glyph glyph-a"><b>SSIM</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span><span class="tag">Computer Vision</span></div><h3>SSIM-Based Real-Time Pattern Detection</h3><p>Repurposed the Structural Similarity Index from Computer Vision to match musical phrases — 95% detection, no training required, runs on embedded hardware. DAFx 2022.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="dtw-vs-rnn-for-symbolic-pattern-recognition" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-b"><b>DTW</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>DTW vs RNN for Symbolic Pattern Recognition</h3><p>Head-to-head comparison using the DoMP dataset (4,000 patterns, 40 musicians). RNN holds 98% accuracy at 10 patterns; DTW degrades significantly. Audio Mostly 2024.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="real-time-polyphonic-audio-pattern-detection" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>JAES</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Real-Time Polyphonic Audio Pattern Detection</h3><p>From MIDI to raw audio. RNN achieves F1 0.76 at 14 ms inference on a Raspberry Pi 4 — 74× faster than DTW. DoPP dataset. JAES 2026.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="multisensory-concerts" data-tags="Music Tech|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_multisensory-concerts.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">IoT</span></div><h3>Multisensory Concerts</h3><p>Designing multi-modal concert experiences that extend beyond the auditory dimension.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="hot-licks-mapper" data-tags="Music Tech|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_hot-licks-mapper.jpg"></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">IoT</span></div><h3>Hot Licks Mapper</h3><p>Web-based visual routing tool that wires SMI musical patterns to stage and audience devices in real time — one-to-one, one-to-many, many-to-many, live from a tablet.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="datasets-for-musical-pattern-detection" data-tags="Music Tech|AI / ML" aria-haspopup="dialog"><div class="cover glyph glyph-b"><b>DoMP</b></div><div class="rbody"><div class="tags"><span class="tag t-music">Music Tech</span><span class="tag">AI / ML</span></div><h3>Datasets for Musical Pattern Detection</h3><p>Curated dataset of musician-validated phrase repetitions capturing expressive and stylistic variation.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="musical-onset-detection-via-the-s-transform" data-tags="AI / ML|Music Tech" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>S(t)</b></div><div class="rbody"><div class="tags"><span class="tag">AI / ML</span><span class="tag t-music">Music Tech</span></div><h3>Musical Onset Detection via the S-Transform</h3><p>Master&#x27;s thesis. A training-free beat tracking method using frequency-dependent S-transform band splitting — outperforms pure spectral methods, no prior information or dataset needed.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="continuous-blood-pressure-monitoring-for-covid-1" data-tags="IoT|Computer Vision" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_continuous-blood-pressure-monitoring-for-covid-1.jpg"></div><div class="rbody"><div class="tags"><span class="tag">IoT</span><span class="tag">Computer Vision</span></div><h3>Continuous Blood Pressure Monitoring for COVID-19 Patients</h3><p>Retrofitted IoT system for remote, continuous SpO₂ and blood pressure monitoring — reducing staff exposure risk.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="automated-quality-checking-of-care-labels" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_automated-quality-checking-of-care-labels.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Automated Quality Checking of Care Labels</h3><p>End-to-end CV system — from flatbed scanner to conveyor belt — that cut label QC time by ~99.5% and raised accuracy by 300% through full-batch checking.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="automated-fabric-quality-checking" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_automated-fabric-quality-checking.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Automated Fabric Quality Checking</h3><p>Real-time microscopic camera array detecting weave defects at the loom — cut operator headcount by 50% in the pilot plant.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="seamless-digital-prints-of-finished-garments" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_seamless-digital-prints-of-finished-garments.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Seamless Digital Prints of Finished Garments</h3><p>On-demand DTG printing on pre-made garments using real-time image warping to align designs across the geometric imperfections of a garment flip.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="smart-retail-racks" data-tags="IoT|Industry" aria-haspopup="dialog"><div class="cover glyph glyph-d"><b>IoT</b></div><div class="rbody"><div class="tags"><span class="tag">IoT</span><span class="tag t-industry">Industry</span></div><h3>Smart Retail Racks</h3><p>Sensor-equipped retail racks enabling smarter inventory interaction and customer engagement.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="smart-prototyping-for-garment-prints" data-tags="Computer Vision|Industry|IoT" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_smart-prototyping-for-garment-prints.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span><span class="tag">IoT</span></div><h3>Smart Prototyping for Garment Prints</h3><p>AR projection table that lets customers visualize print designs on real garments before production.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="tech-pack-digitization" data-tags="Computer Vision|Industry|AI / ML" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_tech-pack-digitization.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span><span class="tag">AI / ML</span></div><h3>Tech Pack Digitization</h3><p>Pre-LLM pipeline using OCR and layout segmentation to convert a large physical archive of garment blueprints into a searchable digital format.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="aeoon-dtg-printer-integration" data-tags="Industry" aria-haspopup="dialog"><div class="cover glyph glyph-c"><b>PLC</b></div><div class="rbody"><div class="tags"><span class="tag t-industry">Industry</span></div><h3>Aeoon DTG Printer Integration</h3><p>Reverse-engineered a closed PLC-driven DTG printer to synchronize with a custom loading mechanism — three closed-loop subsystems in tight coordination via custom C++.</p><span class="more">Open the leaf →</span></div></button>
+          <button class="panel rcard" id="lace-archive-and-search-system" data-tags="Computer Vision|Industry" aria-haspopup="dialog"><div class="cover"><img loading="lazy" alt="" src="assets/thumbs/p_lace-archive-and-search-system.jpg"></div><div class="rbody"><div class="tags"><span class="tag">Computer Vision</span><span class="tag t-industry">Industry</span></div><h3>Lace Archive and Search System</h3><p>Digitized a physical lace catalog for Noyon Dentelle using microscopic cameras and flatbed scanners, then built a context-aware ERP-integrated search system still in use today.</p><span class="more">Open the leaf →</span></div></button>
+        </div>
+        <p class="empty" id="none">No leaf in this manuscript matches your search.</p>
+        <p class="muted foot-note">Datasets and papers live on the <a href="publications.html#datasets">Publications</a> page; videos on <a href="publications.html#demos">Demos</a>.</p>
+      </div>
+    </section>
+    <dialog id="dossier" aria-labelledby="d-title">
   <div class="dossier">
     <div class="dhead"><div class="tags" id="d-tags"></div><h2 id="d-title"></h2>
       <button class="dclose" aria-label="Close">✕</button></div>
@@ -289,20 +323,27 @@
 <figure><a class="zoom" href="images/projects/mas/lace1.png"><img loading="lazy" alt="reference" src="images/projects/mas/lace1.png"></a><figcaption>Macro close-up of a digitized laces.</figcaption></figure>
 <figure><a class="zoom" href="images/projects/mas/lace2.png"><img loading="lazy" alt="reference" src="images/projects/mas/lace2.png"></a><figcaption>Macro close-up of a digitized laces.</figcaption></figure>
 <p>The result was a context-aware search and retrieval system integrated directly into the company's existing ERP, allowing designers to search by keyword, style attribute, or sub-design reference and instantly browse a visual catalog of relevant laces. The system is still in operation today.</p></div></template>
-</main>
-<footer class="footer">
-  <div class="wrap">
-    <div class="foot-brand"><img class="foot-eleph" src="assets/art/elephant-footer.svg" alt=""><div><div class="irons">Valar <em>Morghulis</em></div><small>© 2026 Nishal Stanislaus Silva</small></div></div><ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="music.html">Music</a></li>
-      <li><a href="photography.html">Photography</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </div>
-</footer>
-<script src="assets/main.js" defer></script>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="foot-brand">
+        <img class="foot-eleph" src="assets/art/elephant-footer.svg" alt="">
+        <div>
+          <div class="irons">Valar <em>Morghulis</em></div>
+          <small>© 2026 Nishal Stanislaus Silva</small>
+        </div>
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="music.html">Music</a></li>
+        <li><a href="photography.html">Photography</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="assets/main.js" defer></script>
 </body>
 </html>
