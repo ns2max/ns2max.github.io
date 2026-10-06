@@ -6,20 +6,19 @@
   --panel: #36363b;
   --line: rgba(201, 169, 107, 0.22);
   --line-strong: rgba(201, 169, 107, 0.42);
-  --blood: #c9a96b;
-  --blood-hot: #d9c08a;
-  --blood-deep: #6b5a3a;
-  --cyan: #93bba8;
+  --accent: #c9a96b;
+  --accent-hot: #d9c08a;
+  --accent-deep: #6b5a3a;
+  --sage: #93bba8;
   --red: #d9726f;
   --bone: #ece8e0;
   --muted: #b9b4aa;
   --faint: #8a867e;
-  --gold: #d1a0aa;
+  --rose: #d1a0aa;
   --f-display: "Marcellus SC", "Cormorant SC", serif;
   --f-head: "Cormorant SC", Georgia, serif;
   --f-body: "Alegreya", Georgia, serif;
-  --f-mono: "Cormorant SC", Georgia, serif;
-  --f-hg: "Noto Serif Sinhala", "Iskoola Pota", serif;
+  --f-sinhala: "Noto Serif Sinhala", "Iskoola Pota", serif;
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
   --nav-h: 70px;
@@ -75,7 +74,7 @@ a {
 }
 
 ::selection {
-  background: var(--blood);
+  background: var(--accent);
   color: #fff;
 }
 
@@ -84,10 +83,10 @@ a {
   left: -999px;
   top: 8px;
   z-index: 200;
-  background: var(--blood);
+  background: var(--accent);
   color: #fff;
   padding: 8px 14px;
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
 }
 
 .skip:focus {
@@ -129,13 +128,13 @@ body {
 .eyebrow {
   letter-spacing: 0.22em;
   font-size: 0.95rem;
-  font-family: var(--f-hg), var(--f-head);
+  font-family: var(--f-sinhala), var(--f-head);
   text-transform: uppercase;
 }
 
 .eyebrow::before {
   font-size: 0.6rem;
-  color: var(--blood);
+  color: var(--accent);
 }
 
 a:hover {

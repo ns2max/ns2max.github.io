@@ -265,8 +265,8 @@
   doc.addEventListener("keydown", function (e) {
     buf = (buf + e.key).slice(-3);
     if (buf === "666") {
-      root.style.setProperty("--cyan", "#ff4258");
-      root.style.setProperty("--blood", "#ff1a33");
+      root.style.setProperty("--sage", "#ff4258");
+      root.style.setProperty("--accent", "#ff1a33");
       console.log("%cThe number of the beast.", "color:#ff4258;font:700 16px monospace");
     }
   });

@@ -25,7 +25,7 @@ video {
 
 .search:focus {
   outline: none;
-  border-color: var(--cyan);
+  border-color: var(--sage);
   box-shadow: 0 0 0 3px rgba(147, 187, 168, 0.15);
 }
 
@@ -48,7 +48,7 @@ video {
 
 .empty {
   display: none;
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   color: var(--muted);
   padding: 40px 0;
 }
@@ -92,12 +92,12 @@ video {
   background: transparent;
   border: 1px solid var(--line-strong);
   color: var(--bone);
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 1.1rem;
 }
 
 .dclose:hover {
-  border-color: var(--blood);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -129,7 +129,7 @@ video {
 }
 
 .prose li::marker {
-  color: var(--blood);
+  color: var(--accent);
 }
 
 .prose figure {
@@ -145,8 +145,8 @@ video {
 }
 
 .prose figure a:hover {
-  border-color: var(--cyan);
-  box-shadow: 0 0 22px -6px var(--cyan);
+  border-color: var(--sage);
+  box-shadow: 0 0 22px -6px var(--sage);
 }
 
 .prose figure img {
@@ -156,7 +156,7 @@ video {
 }
 
 .prose figcaption {
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 0.78rem;
   color: var(--muted);
   margin-top: 8px;
@@ -174,7 +174,7 @@ video {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 0.88rem;
 }
 
@@ -186,7 +186,7 @@ video {
 }
 
 .prose th {
-  color: var(--cyan);
+  color: var(--sage);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 500;
@@ -224,7 +224,7 @@ video {
 }
 
 .prose h3 {
-  color: var(--blood-hot);
+  color: var(--accent-hot);
   font-size: 1.25rem;
 }
 
@@ -237,7 +237,7 @@ video {
 }
 
 .dclose:hover {
-  background: var(--blood-deep);
+  background: var(--accent-deep);
 }
 
 .dossier .dhead h2 {
@@ -246,7 +246,7 @@ video {
 
 .prose h3::before {
   font-family: var(--f-body);
-  color: var(--gold);
+  color: var(--rose);
 }
 
 .prose h3::before {

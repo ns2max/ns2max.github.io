@@ -27,7 +27,7 @@
   font-size: 0.74rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: var(--sage);
   padding-top: 4px;
   white-space: nowrap;
 }
@@ -47,7 +47,7 @@
 }
 
 .pub .ttl a:hover {
-  color: var(--cyan);
+  color: var(--sage);
 }
 
 .pub .au {
@@ -82,7 +82,7 @@
 
 .dset .kind {
   font-size: 0.7rem;
-  color: var(--blood-hot);
+  color: var(--accent-hot);
   text-transform: uppercase;
 }
 
@@ -97,7 +97,7 @@
 
 .dset .facts span::before {
   content: "▸ ";
-  color: var(--blood);
+  color: var(--accent);
 }
 
 .dset p {
@@ -107,7 +107,7 @@
 }
 
 .dset:hover {
-  border-color: var(--cyan);
+  border-color: var(--sage);
 }
 
 .vgrid {
@@ -147,7 +147,7 @@
   width: 70px;
   height: 70px;
   transform: translate(-50%, -50%);
-  background: var(--blood);
+  background: var(--accent);
   clip-path: polygon(20% 8%, 20% 92%, 94% 50%);
   transition: transform 0.25s;
 }
@@ -185,7 +185,7 @@
 
 .talks .when {
   font-size: 0.74rem;
-  color: var(--cyan);
+  color: var(--sage);
   text-transform: uppercase;
 }
 

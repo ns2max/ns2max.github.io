@@ -39,7 +39,7 @@
 
 .sheet dl {
   margin: 0;
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 0.82rem;
 }
 
@@ -77,7 +77,7 @@
 
 .story h3 {
   margin-top: 2.2em;
-  color: var(--blood-hot);
+  color: var(--accent-hot);
 }
 
 .story h3:first-child {
@@ -118,14 +118,14 @@
   width: 13px;
   height: 13px;
   background: var(--void);
-  border: 2px solid var(--blood);
+  border: 2px solid var(--accent);
   transform: rotate(45deg);
   transition: background 0.2s, box-shadow 0.2s;
 }
 
 .timeline .when {
   font-size: 0.75rem;
-  color: var(--cyan);
+  color: var(--sage);
   text-transform: uppercase;
 }
 
@@ -154,7 +154,7 @@
 }
 
 .tl-head {
-  color: var(--cyan);
+  color: var(--sage);
 }
 
 .timeline .when {
@@ -170,16 +170,16 @@
 }
 
 .timeline::before {
-  background: linear-gradient(var(--blood), var(--cyan));
+  background: linear-gradient(var(--accent), var(--sage));
 }
 
 .timeline li::before {
-  border-color: var(--blood);
+  border-color: var(--accent);
 }
 
 .timeline li:hover::before {
-  background: var(--blood);
-  box-shadow: 0 0 14px var(--blood);
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent);
 }
 
 .sheet h3 {
@@ -215,5 +215,5 @@
 .btn.cv,
 .btn.cv:hover {
   color: #0d0d0d;
-  background-color: var(--cyan);
+  background-color: var(--sage);
 }

@@ -35,9 +35,9 @@
 }
 
 .hero .boot {
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 0.82rem;
-  color: var(--cyan);
+  color: var(--sage);
   letter-spacing: 0.12em;
   min-height: 1.6em;
   margin-bottom: 8px;
@@ -59,7 +59,7 @@
   letter-spacing: 0.02em;
   margin: 0 0 6px;
   color: var(--bone);
-  text-shadow: 0 0 40px rgba(201, 169, 107, 0.45), 0 4px 0 var(--blood-deep);
+  text-shadow: 0 0 40px rgba(201, 169, 107, 0.45), 0 4px 0 var(--accent-deep);
 }
 
 .roles {
@@ -134,7 +134,7 @@
 
 .class-card .lvl {
   font-size: 0.72rem;
-  color: var(--cyan);
+  color: var(--sage);
   text-transform: uppercase;
 }
 
@@ -187,7 +187,7 @@
 }
 
 .eu {
-  font-family: var(--f-mono);
+  font-family: var(--f-head);
   font-size: 0.74rem;
   color: var(--faint);
   letter-spacing: 0.08em;
@@ -224,11 +224,11 @@
 
 .scroll-cue {
   font-family: var(--f-head);
-  color: var(--blood);
+  color: var(--accent);
 }
 
 .scroll-cue::after {
-  background: linear-gradient(var(--blood), transparent);
+  background: linear-gradient(var(--accent), transparent);
 }
 
 .stat b {
@@ -249,7 +249,7 @@
 }
 
 .class-card .go {
-  color: var(--blood-hot);
+  color: var(--accent-hot);
   font-family: var(--f-head);
 }
 
@@ -316,10 +316,10 @@
 }
 
 .hero .si-row {
-  font-family: var(--f-hg);
+  font-family: var(--f-sinhala);
   font-size: clamp(1.15rem, 2.3vw, 1.75rem) !important;
   font-weight: 600;
-  color: var(--blood-hot) !important;
+  color: var(--accent-hot) !important;
   text-transform: none;
   margin: 0 0 2px;
   min-height: 0;
@@ -329,7 +329,7 @@
 }
 
 .si-row {
-  font-family: var(--f-hg);
+  font-family: var(--f-sinhala);
   font-size: clamp(1.15rem, 2.3vw, 1.75rem) !important;
   font-weight: 600;
   text-transform: none;
@@ -354,7 +354,7 @@
 }
 
 .roles {
-  color: var(--cyan);
+  color: var(--sage);
   font-family: "Rozha One", serif;
   text-transform: lowercase;
   letter-spacing: 0.34em;

@@ -7,7 +7,7 @@
 }
 
 .contact-grid .panel h3 {
-  color: var(--cyan);
+  color: var(--sage);
   font-size: 1.1rem;
   letter-spacing: 0.16em;
 }
@@ -34,9 +34,9 @@
   height: 72px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--blood);
+  border: 1px solid var(--accent);
   border-radius: 50%;
-  color: var(--cyan);
+  color: var(--sage);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
@@ -62,8 +62,8 @@
 
 .contact-links a:hover .ic {
   background: rgba(201, 169, 107, 0.14);
-  color: var(--blood-hot);
-  border-color: var(--blood-hot);
+  color: var(--accent-hot);
+  border-color: var(--accent-hot);
 }
 
 .contact-links a:hover em {
