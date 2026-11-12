@@ -275,8 +275,13 @@ dialog.lb::backdrop {
 }
 
 .lb img {
-  max-width: 100%;
-  max-height: 100%;
+  /* Size against the window, not the grid cell: a percentage height in an
+     auto-height grid row is ignored, which let tall portraits overflow. */
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 128px);
+  max-height: calc(100vh - 112px);
+  max-height: calc(100dvh - 112px);
   object-fit: contain;
 }
 
@@ -330,6 +335,10 @@ dialog.lb::backdrop {
 @media (max-width: 640px) {
   .lb .stage {
     padding: 56px 8px;
+  }
+
+  .lb img {
+    max-width: calc(100vw - 16px);
   }
 }
 

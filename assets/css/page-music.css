@@ -249,3 +249,170 @@
 }
 
 @keyframes eq { 0% { height: 10%; } 100% { height: 100%; } }
+
+/* Bands & Broadcasts: video cards (same look as Publications demos). */
+.vgrid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+}
+
+.yt {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: #000;
+  display: block;
+  overflow: hidden;
+}
+
+.yt img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.yt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(35, 35, 38, 0.7), rgba(35, 35, 38, 0.1));
+}
+
+.yt::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 70px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  clip-path: polygon(20% 8%, 20% 92%, 94% 50%);
+  transition: transform 0.25s;
+}
+
+.yt:hover::after {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.vcard h3 {
+  font-size: 1.25rem;
+  margin: 14px 0 4px;
+  line-height: 1.2;
+}
+
+.vcard p {
+  color: var(--muted);
+  font-size: 0.93rem;
+  margin: 0;
+}
+
+/* Click-to-play buttons, link-out cards, live iframes. */
+button.yt {
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+iframe.yt-live {
+  border: 1px solid var(--line-strong);
+}
+
+.yt.ext::after {
+  width: auto;
+  height: auto;
+  clip-path: none;
+  background: var(--accent);
+  color: #26231d;
+  padding: 7px 14px;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  content: "YOUTUBE \2197";
+}
+
+.yt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.vcard .note {
+  color: var(--faint);
+  font-style: italic;
+}
+
+.band-title {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin: 46px 0 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.band-title:first-of-type {
+  margin-top: 8px;
+}
+
+.sc-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+iframe.sc {
+  width: 100%;
+  height: 166px;
+  border: 1px solid var(--line-strong);
+  display: block;
+}
+
+/* Instagram embeds (Instagram's own script sizes them). */
+.ig-grid {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  align-items: start;
+}
+
+.ig-item {
+  margin: 0;
+  min-width: 0;
+}
+
+.ig-item .instagram-media {
+  margin: 0 auto !important;
+  min-width: 0 !important;
+  max-width: 540px !important;
+  width: 100% !important;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  padding: 24px;
+}
+
+.ig-item iframe.instagram-media {
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+.ig-item figcaption {
+  color: var(--muted);
+  font-size: 0.93rem;
+  margin-top: 12px;
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+.ig-item figcaption b {
+  color: var(--bone);
+  font-weight: 500;
+}
